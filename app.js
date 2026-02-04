@@ -2,123 +2,51 @@
 // MOCK DATA
 // ===================================
 
-const mockData = {
-  companies: [
-    { id: 1, name: 'ABSA', type: 'Parent', parentId: null, contact: 'John Doe', email: 'john@absa.co.za', phone: '+27 11 123 4567', address: '15 Troye Street, Johannesburg', registrationNumber: '1987/004321/06', taxId: 'ZA1234567890', industry: 'Banking', foundedDate: '1991-01-01', active: true, salesPerson: 'John Sales' },
-    { id: 2, name: 'CapiTec', type: 'Parent', parentId: null, contact: 'Jane Smith', email: 'jane@capitec.co.za', phone: '+27 21 987 6543', address: '1 Quantum Street, Stellenbosch', registrationNumber: '2001/012345/06', taxId: 'ZA9876543210', industry: 'Banking', foundedDate: '2001-03-01', active: true, salesPerson: 'Sarah Connor' },
-    { id: 3, name: 'Standard Bank', type: 'Parent', parentId: null, contact: 'Mike Brown', email: 'mike@standardbank.co.za', phone: '+27 11 555 0000', address: '5 Simmonds Street, Johannesburg', registrationNumber: '1962/000738/06', taxId: 'ZA5555555555', industry: 'Banking', foundedDate: '1862-10-15', active: true, salesPerson: 'Thabo Mahlafunya' }
-  ],
 
-  pricing: [
-    { id: 1, parentId: 0, parentName: 'Capitec', companyId: 'C1TNPVI4X5', companyName: 'Capitec', productName: 'AVS', rangeFrom: 1, rangeTo: 999999, price: 14, validFor: '1 Month', status: 'Active' },
-    { id: 2, parentId: 1, parentName: 'ABSA', companyId: '1', companyName: 'ABSA', productName: 'AVS', rangeFrom: 1, rangeTo: 10, price: 14, validFor: '1 Month', status: 'Active' },
-    { id: 3, parentId: 1, parentName: 'ABSA', companyId: '1', companyName: 'ABSA', productName: 'AVS', rangeFrom: 11, rangeTo: 2000, price: 12, validFor: '1 Month', status: 'Active' },
-    { id: 4, parentId: 1, parentName: 'ABSA', companyId: '1', companyName: 'ABSA', productName: 'AVS', rangeFrom: 2001, rangeTo: 5000, price: 9, validFor: '1 Month', status: 'Active' },
-    { id: 5, parentId: 1, parentName: 'ABSA', companyId: '1', companyName: 'ABSA', productName: 'AVS', rangeFrom: 5001, rangeTo: 10000, price: 6, validFor: '1 Month', status: 'Active' },
-    { id: 6, parentId: 1, parentName: 'ABSA', companyId: '1', companyName: 'ABSA', productName: 'AVS', rangeFrom: 10001, rangeTo: 999999, price: 4, validFor: '1 Month', status: 'Active' }
-  ],
-
-  pricedTransactions: [
-    { company: 'ABSA', product: 'AVS', transactions: 15, rangeFrom: 11, rangeTo: 2000, unitPrice: 12.00, totalPrice: 180.00, date: '2025-01-15' },
-    { company: 'CapiTec', product: 'AVS', transactions: 1, rangeFrom: 1, rangeTo: 999999, unitPrice: 14.00, totalPrice: 14.00, date: '2025-01-15' }
-  ],
-
-  users: [
-    { firstName: 'Thabo', lastName: 'Mahlafunya', email: 'thabo@billing.com', role: 'Admin', userGroup: 'Administrator', password: '••••••••', authorized: true, createdDate: '2024-01-01' },
-    { firstName: 'Sarah', lastName: 'Connor', email: 'sarah@billing.com', role: 'User', userGroup: 'Manager', password: '••••••••', authorized: true, createdDate: '2024-06-15' },
-    { firstName: 'John', lastName: 'Sales', email: 'john@billing.com', role: 'User', userGroup: 'Sales', assignedClients: ['ABSA'], password: '••••••••', authorized: true, createdDate: '2025-01-20' },
-    { firstName: 'Alice', lastName: 'Waiting', email: 'alice@billing.com', role: 'User', userGroup: 'Sales', password: '••••••••', authorized: false, createdDate: '2025-01-22' }
-  ],
-
-  transactions: [
-    { id: 1, company: 'ABSA', product: 'IDV', date: '01/03/2025', count: 12 },
-    { id: 2, company: 'ABSA', product: 'Faceview', date: '01/03/2025', count: 3 },
-    { id: 3, company: 'ABSA', product: 'RIDV', date: '01/03/2025', count: 3 },
-    { id: 4, company: 'ABSA', product: 'Account Verification', date: '01/03/2025', count: 3 },
-    { id: 5, company: 'ABSA', product: 'IDV Photo', date: '01/03/2025', count: 3 },
-    { id: 6, company: 'ABSA', product: 'AVS', date: '01/03/2025', count: 15 },
-    { id: 7, company: 'CapiTec', product: 'AVS', date: '01/03/2025', count: 1 }
-  ],
-
-  invoices: [
-    {
-      id: 1,
-      company: 'ABSA',
-      transactions: 15,
-      unitPrice: 12.00,
-      totalPrice: 180.00,
-      dueDate: '31/01/2025',
-      paidAmount: 90.00,
-      discount: 0.00,
-      outstanding: 90.00,
-      status: 'Unpaid',
-      billingMonth: 'January 2025'
-    },
-    {
-      id: 2,
-      company: 'CapiTec',
-      transactions: 1,
-      unitPrice: 14.00,
-      totalPrice: 14.00,
-      dueDate: '31/01/2025',
-      paidAmount: 7.00,
-      discount: 0.00,
-      outstanding: 7.00,
-      status: 'Unpaid',
-      billingMonth: 'January 2025'
-    }
-  ],
-
-  usage: [
-    { company: 'ABSA', username: 'thabo_mahlafunya', firstName: 'Thabo', lastName: 'Mahlafunya', enquiryId: '10012', input: '9803085D••••• | Thabo | Mahlafunya', output: '9803085D••••• | Thabo | Mahlafunya', idNumber: '9803085D•••••', product: 'IDV', transactions: 1 },
-    { company: 'ABSA', username: 'thabo_mahlafunya', firstName: 'Thabo', lastName: 'Mahlafunya', enquiryId: '10013', input: '9803085D••••• | Thabo | Mahlafunya', output: '9803085D••••• | Thabo | Mahlafunya', idNumber: '9803085D•••••', product: 'Faceview', transactions: 1 },
-    { company: 'ABSA', username: 'thabo_mahlafunya', firstName: 'Thabo', lastName: 'Mahlafunya', enquiryId: '10014', input: '9803085D••••• | Thabo | Mahlafunya', output: '9803085D••••• | Thabo | Mahlafunya', idNumber: '9803085D•••••', product: 'RIDV', transactions: 1 },
-    { company: 'ABSA', username: 'thabo_mahlafunya', firstName: 'Thabo', lastName: 'Mahlafunya', enquiryId: '10015', input: '9803085D••••• | Thabo | Mahlafunya', output: '9803085D••••• | Thabo | Mahlafunya', idNumber: '9803085D•••••', product: 'Account Verification', transactions: 1 },
-    { company: 'ABSA', username: 'thabo_mahlafunya', firstName: 'Thabo', lastName: 'Mahlafunya', enquiryId: '10016', input: '9803085D••••• | Thabo | Mahlafunya', output: '9803085D••••• | Thabo | Mahlafunya', idNumber: '9803085D•••••', product: 'IDV Photo', transactions: 1 },
-    { company: 'ABSA', username: 'thabo_mahlafunya', firstName: 'Thabo', lastName: 'Mahlafunya', enquiryId: '10017', input: '9803085D••••• | Thabo | Mahlafunya', output: '9803085D••••• | Thabo | Mahlafunya', idNumber: '9803085D•••••', product: 'IDV', transactions: 1 },
-    { company: 'ABSA', username: 'thabo_mahlafunya', firstName: 'Thabo', lastName: 'Mahlafunya', enquiryId: '10018', input: '9803085D••••• | Thabo | Mahlafunya', output: '9803085D••••• | Thabo | Mahlafunya', idNumber: '9803085D•••••', product: 'IDV', transactions: 1 }
-  ],
-
-  companyUsers: [
-    { companyId: 1, username: 'john_doe', firstName: 'John', surname: 'Doe', position: 'Manager', lastLogin: '2025-01-03', password: '••••••••' },
-    { companyId: 1, username: 'jane_admin', firstName: 'Jane', surname: 'Admin', position: 'Admin', lastLogin: '2025-01-02', password: '••••••••' },
-    { companyId: 2, username: 'sarah_smith', firstName: 'Sarah', surname: 'Smith', position: 'User', lastLogin: '2025-01-01', password: '••••••••' }
-  ],
-
-  manualBilling: [
-    { id: 'MB001', company: 'ABSA', description: 'Correction for Jan', amount: 500.00, date: '2025-01-15', status: 'Pending', authorized: false, createdBy: 'Sarah Connor', createdDate: '2025-01-15' },
-    { id: 'MB002', company: 'CapiTec', description: 'Ad-hoc service', amount: 1200.00, date: '2025-01-10', status: 'Approved', authorized: true, createdBy: 'Thabo Mahlafunya', createdDate: '2025-01-10', authorizedBy: 'Thabo Mahlafunya', authorizedDate: '2025-01-11' },
-    { id: 'MB003', company: 'Standard Bank', description: 'Special discount', amount: 750.00, date: '2025-01-18', status: 'Pending', authorized: false, createdBy: 'Sarah Connor', createdDate: '2025-01-18' }
-  ],
-
-  batches: [
-    { id: 'B001', date: '2025-01-20', description: 'January Upload 1', status: 'Processed', records: 150, authorized: true, createdBy: 'Thabo Mahlafunya', authorizedBy: 'Thabo Mahlafunya', authorizedDate: '2025-01-20' },
-    { id: 'B002', date: '2025-01-21', description: 'January Upload 2', status: 'Processing', records: 45, authorized: false, createdBy: 'Sarah Connor', createdDate: '2025-01-21' },
-    { id: 'B003', date: '2025-01-22', description: 'January Upload 3', status: 'Pending', records: 80, authorized: false, createdBy: 'Sarah Connor', createdDate: '2025-01-22' }
-  ],
-
-  leads: [
-    { id: 1, firstName: 'Alice', lastName: 'Wonder', company: 'Wonderland Inc', email: 'alice@wonderland.com', phone: '0821234567', status: 'New', source: 'Website', dateAdded: '2025-02-01', createdBy: 'John Sales', assignedTo: 'John Sales' },
-    { id: 2, firstName: 'Bob', lastName: 'Builder', company: 'BuildIt', email: 'bob@buildit.co.za', phone: '0839876543', status: 'Contacted', source: 'Referral', dateAdded: '2025-02-02', createdBy: 'Sarah Connor', assignedTo: 'Sarah Connor' },
-    { id: 3, firstName: 'Charlie', lastName: 'Chocolate', company: 'Wonka Factory', email: 'charlie@wonka.com', phone: '0721112222', status: 'Qualified', source: 'LinkedIn', dateAdded: '2025-02-03', createdBy: 'Thabo Mahlafunya', assignedTo: 'Thabo Mahlafunya' }
-  ],
-
-  activities: [
-    { id: 1, companyId: 1, type: 'Call', date: '2025-01-15', description: 'Discussed new pricing model', outcome: 'Positive', user: 'Thabo', createdBy: 'John Sales' },
-    { id: 2, companyId: 1, type: 'Email', date: '2025-01-20', description: 'Sent proposal', outcome: 'Pending', user: 'Thabo', createdBy: 'John Sales' },
-    { id: 3, companyId: 2, type: 'Meeting', date: '2025-02-01', description: 'Quarterly review', outcome: 'Completed', user: 'Sarah', createdBy: 'Sarah Connor' }
-  ],
-
-  supportTickets: [
-    { id: 'T001', companyId: 2, company: 'CapiTec', subject: 'Login Issue', description: 'User cannot login', priority: 'High', status: 'Open', assignedTo: 'Thabo Mahlafunya', createdBy: 'Sarah Connor', createdDate: '2025-02-01' },
-    { id: 'T002', companyId: 1, company: 'ABSA', subject: 'Invoice Query', description: 'Question about line item', priority: 'Medium', status: 'In Progress', assignedTo: 'John Sales', createdBy: 'John Sales', createdDate: '2025-02-02' }
-  ],
-
-  campaigns: [
-    { id: 1, name: 'Q1 Newsletter', type: 'Email Newsletter', status: 'Sent', audience: 'All Users', sentTo: 150, openRate: '45%', clickRate: '12%', createdDate: '2025-01-15' },
-    { id: 2, name: 'New Feature Announcement', type: 'Product Update', status: 'Draft', audience: 'Active Companies', sentTo: 0, openRate: '-', clickRate: '-', createdDate: '2025-02-05' }
-  ]
+let mockData = {
+  companies: [],
+  transactions: [],
+  manualBilling: [],
+  batches: [],
+  usage: [],
+  pricing: [],
+  pricedTransactions: [],
+  leads: [],
+  activities: [],
+  supportTickets: [],
+  campaigns: [],
+  users: [],
+  auditLogs: [],
+  exceptions: [],
+  notifications: [],
+  waitingRoom: [],
+  invoices: [],
+  companyUsers: []
 };
+
+async function loadData() {
+  console.log('Loading app data...');
+
+  // 1. Try LocalStorage
+  if (loadFromLocalStorage()) {
+    console.log('Loaded from LocalStorage');
+    return;
+  }
+
+  // 2. Fetch from data.json
+  try {
+    const response = await fetch('data.json');
+    if (!response.ok) throw new Error('Failed to load data.json');
+    const data = await response.json();
+    Object.assign(mockData, data);
+    standardizeData(); // Enforce Product Standards
+    saveToLocalStorage(); // Seed
+    console.log('Seeded from data.json');
+  } catch (e) {
+    console.error('Failed to load data', e);
+    showNotification('Error loading data.json', 'error');
+  }
+}
 
 // ===================================
 // STATE MANAGEMENT
@@ -130,6 +58,37 @@ let currentSettingsTab = 'authorized';
 let sortColumn = null;
 let sortDirection = 'asc';
 let currentUser = null;
+
+// ===================================
+// LOCALSTORAGE PERSISTENCE
+// ===================================
+
+function saveToLocalStorage() {
+  try {
+    // Save entire mockData to localStorage
+    localStorage.setItem('billingData', JSON.stringify(mockData));
+    console.log('Data saved to localStorage');
+  } catch (error) {
+    console.error('Error saving to localStorage:', error);
+    showNotification('Error saving data', 'error');
+  }
+}
+
+function loadFromLocalStorage() {
+  try {
+    const savedData = localStorage.getItem('billingData');
+    if (savedData) {
+      const parsedData = JSON.parse(savedData);
+      // Merge saved data with mockData, preserving structure
+      Object.assign(mockData, parsedData);
+      console.log('Data loaded from localStorage');
+      return true;
+    }
+  } catch (error) {
+    console.error('Error loading from localStorage:', error);
+  }
+  return false;
+}
 
 // ===================================
 // AUTHENTICATION & SESSION
@@ -496,7 +455,7 @@ function loadPageData(page) {
       // Preserve active tab if possible, or default to unresolved
       const activeTabObj = document.querySelector('[data-support-tab].active');
       const activeTab = activeTabObj ? activeTabObj.getAttribute('data-support-tab') : 'unresolved';
-      renderTickets(mockData.tickets, activeTab);
+      renderTickets(mockData.supportTickets, activeTab);
       break;
     case "marketing":
       renderCampaigns();
@@ -524,7 +483,7 @@ function renderDashboard() {
   // --- 1. Calculate Metrics ---
   // RBAC: Filter invoices based on visible companies
   const visibleCompanies = getFilteredCompanies().map(c => c.name);
-  const filteredInvoices = mockData.invoices.filter(inv => visibleCompanies.includes(inv.company));
+  const filteredInvoices = (mockData.invoices || []).filter(inv => visibleCompanies.includes(inv.company));
 
   const totalRevenue = filteredInvoices.reduce((sum, inv) => sum + inv.totalPrice, 0);
   const paidInvoices = filteredInvoices.filter(i => i.status === 'Paid').length;
@@ -892,9 +851,9 @@ function initCompanyModal() {
   // Return early if required elements don't exist
   if (!modal || !btn || !form) return;
 
+  // Handle new company button -> Open Modal (Restored Functionality)
   btn.onclick = () => {
     modal.classList.add('show');
-    // Reset form
     form.reset();
     parentGroup.classList.add('hidden');
     parentIdGroup.classList.add('hidden');
@@ -902,15 +861,16 @@ function initCompanyModal() {
     // Auto-generate Company ID
     const nextId = mockData.companies.length + 1;
     companyIdInput.value = `C${String(nextId).padStart(3, '0')}`;
-
-    // Populate sales person dropdown
-    const salesPersonSelect = document.getElementById('companySalesPersonSelect');
-    if (salesPersonSelect) {
-      const salesUsers = mockData.users.filter(u => u.userGroup === 'Sales' || u.userGroup === 'Manager' || u.userGroup === 'Administrator');
-      salesPersonSelect.innerHTML = '<option value="">Select Sales Person</option>' +
-        salesUsers.map(u => `<option value="${u.firstName} ${u.lastName}">${u.firstName} ${u.lastName}</option>`).join('');
-    }
   };
+
+  // Populate sales person dropdown
+  const salesPersonSelect = document.getElementById('companySalesPersonSelect');
+  if (salesPersonSelect) {
+    const salesUsers = mockData.users.filter(u => u.userGroup === 'Sales' || u.userGroup === 'Manager' || u.userGroup === 'Administrator');
+    salesPersonSelect.innerHTML = '<option value="">Select Sales Person</option>' +
+      salesUsers.map(u => `<option value="${u.firstName} ${u.lastName}">${u.firstName} ${u.lastName}</option>`).join('');
+  }
+
 
   const closeModal = () => modal.classList.remove('show');
   if (close) close.onclick = closeModal;
@@ -949,7 +909,8 @@ function initCompanyModal() {
     const formData = new FormData(form);
 
     const newCompany = {
-      id: mockData.companies.length + 1,
+
+      id: `C-${String(mockData.companies.length + 2).padStart(3, '0')}`, // Start at C-002 roughly
       name: formData.get('companyName'),
       type: formData.get('companyType') === 'parent' ? 'Parent' : 'Child',
       parentId: formData.get('companyType') === 'child' ? formData.get('parentCompany') : null,
@@ -961,11 +922,16 @@ function initCompanyModal() {
     };
 
     mockData.companies.push(newCompany);
+
+    // Save to localStorage
+    saveToLocalStorage();
+
     renderCompanies();
     closeModal();
 
     // Show success notification
-    showNotification(`Company "${newCompany.name}" created successfully!`, 'success');
+    showNotification(`Company "${newCompany.name
+      }" created successfully!`, 'success');
 
     // Refresh other views that depend on companies
     renderDashboard();
@@ -976,21 +942,90 @@ function initCompanyModal() {
 // TRANSACTIONS
 // ===================================
 
+// Pagination State for Transactions
+let transactionsPage = 1;
+const transactionsPerPage = 10;
+
 function renderTransactions() {
   const tbody = document.getElementById('transactionsTableBody');
-  const filteredTransactions = getFilteredTransactions();
+  const aggregatedTransactions = getAggregatedTransactions(); // Use aggregation here
 
-  tbody.innerHTML = filteredTransactions.map(t => `
-  <tr>
-    <td><a href="#" class="table-link">${t.company}</a></td>
-    <td>${t.product}</td>
-    <td>${t.date}</td>
-    <td>${t.count}</td>
-  </tr>
-  `).join('');
+  // Pagination Logic
+  const totalItems = aggregatedTransactions.length;
+  const totalPages = Math.ceil(totalItems / transactionsPerPage);
 
-  document.getElementById('transactionCount').textContent = `${filteredTransactions.length} of ${mockData.transactions.length} `;
+  if (transactionsPage > totalPages) transactionsPage = totalPages || 1;
+  if (transactionsPage < 1) transactionsPage = 1;
+
+  const start = (transactionsPage - 1) * transactionsPerPage;
+  const end = start + transactionsPerPage;
+  const pageItems = aggregatedTransactions.slice(start, end);
+
+  if (pageItems.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="4" class="text-center">No transactions found</td></tr>';
+  } else {
+    tbody.innerHTML = pageItems.map(t => `
+      <tr>
+        <td><a href="#" class="table-link">${t.company}</a></td>
+        <td>${t.product}</td>
+        <td>${t.date.split('T')[0]}</td> <!-- Date Only -->
+        <td>${t.count}</td>
+      </tr>
+      `).join('');
+  }
+
+  document.getElementById('transactionCount').textContent = `${start + 1}-${Math.min(end, totalItems)} of ${totalItems}`;
+
+  renderTransactionPaginationControls(totalPages);
 }
+
+function getAggregatedTransactions() {
+  const filtered = getFilteredTransactions(); // Base filter by product/date
+  const aggregationMap = {};
+
+  filtered.forEach(t => {
+    // Group by Company + Product + Date (Day)
+    const datePart = t.date.split('T')[0];
+    const key = `${t.company}|${t.product}|${datePart}`;
+
+    if (!aggregationMap[key]) {
+      aggregationMap[key] = {
+        company: t.company,
+        product: t.product,
+        date: datePart,
+        count: 0
+      };
+    }
+    aggregationMap[key].count += (t.count || 1);
+  });
+
+  return Object.values(aggregationMap);
+}
+
+function renderTransactionPaginationControls(totalPages) {
+  const container = document.getElementById('transactionsPagination');
+  if (!container) return;
+
+  let html = '';
+
+  // Prev
+  html += `<button class="btn btn-secondary btn-sm" ${transactionsPage === 1 ? 'disabled' : ''} onclick="changeTransactionsPage(${transactionsPage - 1})">Prev</button>`;
+
+  // Pages
+  for (let i = 1; i <= totalPages; i++) {
+    html += `<button class="btn btn-sm ${i === transactionsPage ? 'btn-primary' : 'btn-secondary'}" onclick="changeTransactionsPage(${i})">${i}</button>`;
+  }
+
+  // Next
+  html += `<button class="btn btn-secondary btn-sm" ${transactionsPage === totalPages ? 'disabled' : ''} onclick="changeTransactionsPage(${transactionsPage + 1})">Next</button>`;
+
+  container.innerHTML = html;
+}
+
+window.changeTransactionsPage = function (page) {
+  transactionsPage = page;
+  renderTransactions();
+};
 
 function getFilteredTransactions() {
   let filtered = [...mockData.transactions];
@@ -1053,31 +1088,6 @@ function initTableSorting() {
 // REPORTS (INVOICES)
 // ===================================
 
-function renderInvoices() {
-  const tbody = document.getElementById('invoicesTableBody');
-  const filteredInvoices = getFilteredInvoices();
-
-  tbody.innerHTML = filteredInvoices.map(inv => `
-    <tr>
-      <td><a href="#" class="table-link">${inv.company}</a></td>
-      <td>${inv.transactions}</td>
-      <td>R${inv.unitPrice.toFixed(2)}</td>
-      <td>R${inv.totalPrice.toFixed(2)}</td>
-      <td>${inv.dueDate}</td>
-      <td>R${inv.paidAmount.toFixed(2)}</td>
-      <td>${inv.discount.toFixed(2)}</td>
-      <td>R${inv.outstanding.toFixed(2)}</td>
-      <td>
-        <select class="status-dropdown ${inv.status.toLowerCase()}">
-          <option value="unpaid" ${inv.status === 'Unpaid' ? 'selected' : ''}>Unpaid ▼</option>
-          <option value="paid" ${inv.status === 'Paid' ? 'selected' : ''}>Paid</option>
-        </select>
-      </td>
-      <td><button class="btn btn-primary" onclick="viewStatement(${inv.id})">View</button></td>
-      <td>${inv.billingMonth}</td>
-    </tr>
-    `).join('');
-}
 
 function getFilteredInvoices() {
   let filtered = [...mockData.invoices];
@@ -1115,42 +1125,147 @@ function initReportTabs() {
 
 function renderUsage() {
   const tbody = document.getElementById('usageTableBody');
-  const filteredUsage = getFilteredUsage();
+  const usageData = getFilteredUsage(); // No aggregation, just filter
 
-  tbody.innerHTML = filteredUsage.map(row => `
+  if (usageData.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="4" class="text-center">No usage data found</td></tr>';
+    document.getElementById('usageCount').textContent = '0';
+    return;
+  }
+
+  // Sort by date desc
+  usageData.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+  tbody.innerHTML = usageData.map(row => `
     <tr>
       <td><a href="#" class="table-link">${row.company}</a></td>
-      <td>${row.username}</td>
-      <td>${row.firstName} ${row.lastName}</td>
-      <td><span class="truncate-text" title="${row.enquiryId}">${row.enquiryId}</span></td>
-      <td><span class="truncate-text" title="${row.input}">${row.input}</span></td>
-      <td><span class="truncate-text" title="${row.output}">${row.output}</span></td>
-      <td>${row.idNumber}</td>
+      <td>${row.username || '-'}</td>
+      <td>${row.firstName || '-'}</td>
+      <td>${row.surname || '-'}</td>
       <td>${row.product}</td>
-      <td>${row.transactions}</td>
+      <td>${row.input || '-'}</td>
+      <td>${row.output || '-'}</td>
+      <td>1</td> <!-- Transaction Unit Force 1 -->
+      <td>${row.date.split('T')[0]}</td>
     </tr>
     `).join('');
 
-  document.getElementById('usageCount').textContent = `${filteredUsage.length} `;
+  document.getElementById('usageCount').textContent = usageData.length;
 }
 
 function getFilteredUsage() {
-  let filtered = [...mockData.usage];
-
+  let data = [...mockData.transactions]; // Source from transactions
   const searchInput = document.getElementById('usageSearch');
+
   if (searchInput && searchInput.value) {
-    const searchTerm = searchInput.value.toLowerCase();
-    filtered = filtered.filter(u =>
-      u.company.toLowerCase().includes(searchTerm) ||
-      u.username.toLowerCase().includes(searchTerm) ||
-      u.firstName.toLowerCase().includes(searchTerm) ||
-      u.lastName.toLowerCase().includes(searchTerm) ||
-      u.product.toLowerCase().includes(searchTerm)
+    const term = searchInput.value.toLowerCase();
+    data = data.filter(u =>
+      u.company.toLowerCase().includes(term) ||
+      u.product.toLowerCase().includes(term) ||
+      (u.username && u.username.toLowerCase().includes(term))
     );
   }
-
-  return filtered;
+  return data;
 }
+
+window.openUsageModal = function () {
+  // Simple check to ensure Companies exist
+  if (mockData.companies.length === 0) {
+    showNotification('Please add companies first', 'warning');
+    return;
+  }
+
+  // Create a modal on the fly or reuse one? We'll reuse 'createPricingModal' HTML structure but repurposed
+  // actually, let's create a dynamic modal for this as it's a new requirement "Generate Usage Transaction"
+  let modal = document.getElementById('usageTransactionModal');
+
+  if (!modal) {
+    const modalHTML = `
+      <div id="usageTransactionModal" class="modal">
+        <div class="modal-content">
+          <span class="close-modal">&times;</span>
+          <h2>Generate Usage Transaction</h2>
+          <form id="usageTransactionForm">
+            <div class="form-group">
+              <label class="form-label">Company</label>
+              <select class="form-select" name="company" required id="usageCompanySelect">
+                  ${mockData.companies.map(c => `<option value="${c.name}">${c.name}</option>`).join('')}
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Product</label>
+              <select class="form-select" name="product" required>
+                <option value="Product A">Product A</option>
+                <option value="Product B">Product B</option>
+                <option value="Product C">Product C</option>
+                <option value="Product D">Product D</option>
+                <option value="Product E">Product E</option>
+                <option value="Product F">Product F</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Input / Quantity</label>
+              <input type="number" class="form-input" name="quantity" min="1" value="1" required>
+            </div>
+            <div class="form-group">
+               <label class="form-label">Input Details (Optional)</label>
+               <input type="text" class="form-input" name="input_details" placeholder="e.g. User ID, Ref">
+            </div>
+            <div class="form-actions">
+              <button type="button" class="btn btn-secondary close-usage-modal">Cancel</button>
+              <button type="submit" class="btn btn-primary">Generate</button>
+            </div>
+          </form>
+        </div>
+      </div>`;
+    document.body.insertAdjacentHTML('beforeend', modalHTML);
+    modal = document.getElementById('usageTransactionModal');
+
+    // Attach listeners
+    modal.querySelector('.close-modal').onclick = () => modal.classList.remove('show');
+    modal.querySelector('.close-usage-modal').onclick = () => modal.classList.remove('show');
+
+    const form = document.getElementById('usageTransactionForm');
+    form.onsubmit = (e) => {
+      e.preventDefault();
+      const formData = new FormData(form);
+      const company = formData.get('company');
+      const product = formData.get('product');
+      const qty = parseInt(formData.get('quantity'));
+      const input = formData.get('input_details') || 'Manual Input';
+
+      // 1. Add to Transactions
+      const newTx = {
+        id: mockData.transactions.length + 1,
+        company: company,
+        product: product,
+        date: new Date().toISOString().split('T')[0], // Date only
+        count: qty,
+        input: input,
+        output: 'Processed',
+        username: currentUser ? `${currentUser.firstName} ${currentUser.lastName}` : 'System',
+        firstName: currentUser ? currentUser.firstName : 'Sys',
+        surname: currentUser ? currentUser.lastName : 'Admin'
+      };
+
+      mockData.transactions.push(newTx);
+      saveToLocalStorage();
+
+      showNotification('Usage Transaction Generated', 'success');
+      modal.classList.remove('show');
+      renderUsage(); // Refresh Usage Table
+
+      // Also refresh Transactions if visible
+      if (currentPage === 'transactions') renderTransactions();
+    };
+  } else {
+    // Update options
+    const select = document.getElementById('usageCompanySelect');
+    if (select) select.innerHTML = mockData.companies.map(c => `<option value="${c.name}">${c.name}</option>`).join('');
+  }
+
+  modal.classList.add('show');
+};
 
 function initUsageFilters() {
   const searchInput = document.getElementById('usageSearch');
@@ -1214,25 +1329,62 @@ function initPricingFilters() {
 function renderPricedTransactions() {
   const tbody = document.getElementById('pricedTransactionsTableBody');
   const productFilter = document.getElementById('pricedTransactionsProductFilter');
-  let transactions = [...mockData.pricedTransactions];
+  let pricingData = [];
 
+  // 1. Get all transactions, group by Company + Product
+  const txMap = {};
+  mockData.transactions.forEach(t => {
+    const key = `${t.company}|${t.product}`;
+    if (!txMap[key]) txMap[key] = 0;
+    txMap[key] += (t.count || 1); // Aggregate counts
+  });
+
+  // 2. Iterate Pricing configs to determine matches and costs
+  mockData.pricing.forEach(p => {
+    const key = `${p.companyName}|${p.productName}`;
+    const txCount = txMap[key] || 0;
+
+    // Calculate total price based on tiers? 
+    // Simplified: Just Unit Price * Count for now, unless range is strictly enforced.
+    // Requirements say "Priced Transactions Table... not showing number of transactions".
+    // We will show the aggregation.
+
+    const totalPrice = txCount * p.price;
+
+    pricingData.push({
+      company: p.companyName,
+      product: p.productName,
+      transactions: txCount,
+      rangeFrom: p.rangeFrom,
+      rangeTo: p.rangeTo,
+      unitPrice: p.price,
+      totalPrice: totalPrice,
+      validFor: p.validFor
+    });
+  });
+
+  // Filter
   if (productFilter && productFilter.value !== 'all') {
-    transactions = transactions.filter(t => t.product.toLowerCase() === productFilter.value.toLowerCase());
+    pricingData = pricingData.filter(t => t.product.toLowerCase() === productFilter.value.toLowerCase());
   }
 
-  tbody.innerHTML = transactions.map(t => `
-    <tr>
-      <td>${t.company}</td>
-      <td>${t.product}</td>
-      <td>${t.transactions}</td>
-      <td>${t.rangeFrom}</td>
-      <td>${t.rangeTo}</td>
-      <td>R${t.unitPrice.toFixed(2)}</td>
-      <td>R${t.totalPrice.toFixed(2)}</td>
-    </tr>
-    `).join('');
+  if (pricingData.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="7" class="text-center">No priced transactions found</td></tr>';
+  } else {
+    tbody.innerHTML = pricingData.map(t => `
+        <tr>
+          <td>${t.company}</td>
+          <td>${t.product}</td>
+          <td>${t.transactions}</td>
+          <td>${t.rangeFrom}</td>
+          <td>${t.rangeTo}</td>
+          <td>R${t.unitPrice.toFixed(2)}</td>
+          <td>R${t.totalPrice.toFixed(2)}</td>
+        </tr>
+        `).join('');
+  }
 
-  document.getElementById('pricedTransactionsCount').textContent = transactions.length;
+  document.getElementById('pricedTransactionsCount').textContent = pricingData.length;
 }
 
 function initPricedTransactionsFilters() {
@@ -1417,7 +1569,7 @@ function initManualBilling() {
     modal.classList.add('show');
     form.reset();
     // Populate companies
-    companySelect.innerHTML = mockData.companies.map(c => `< option value = "${c.name}" > ${c.name}</option > `).join('');
+    companySelect.innerHTML = mockData.companies.map(c => `<option value="${c.name}">${c.name}</option>`).join('');
   };
 
   importBtn.onclick = () => {
@@ -1447,6 +1599,7 @@ function initManualBilling() {
     };
 
     mockData.manualBilling.push(newBilling);
+    saveToLocalStorage();
     renderManualBilling();
     closeModal();
 
@@ -1457,6 +1610,113 @@ function initManualBilling() {
 // ===================================
 // BATCH LOGGER
 // ===================================
+
+// Batch Logger with Company Select
+function initBatchLogger() {
+  const modal = document.getElementById('batchLoggerModal');
+  const select = document.getElementById('batchCompanySelect');
+  const createBtn = document.getElementById('createBatchBtn');
+  const form = document.getElementById('batchLoggerForm');
+  const cancelBtn = document.getElementById('cancelBatchLogger');
+  const closeBtn = modal ? modal.querySelector('.close-modal') : null;
+
+  // Populate Select
+  if (select) {
+    select.innerHTML = '<option value="">Select Company...</option>' +
+      mockData.companies.map(c => `<option value="${c.name}">${c.name}</option>`).join('');
+  }
+
+  // Open Modal
+  if (createBtn && modal) {
+    createBtn.onclick = () => {
+      modal.classList.add('show');
+      if (form) form.reset();
+      // Set default date
+      const dateInput = form.querySelector('[name="date"]');
+      if (dateInput) dateInput.value = new Date().toISOString().split('T')[0];
+    };
+  }
+
+  // Handle Submit
+  if (form) {
+    form.onsubmit = (e) => {
+      e.preventDefault();
+      const formData = new FormData(form);
+
+      const newBatch = {
+        id: `B-${String(mockData.batches.length + 1).padStart(3, '0')}`,
+        company: formData.get('company'),
+        product: formData.get('product') || 'Product A', // Capture product
+        description: formData.get('description'),
+        records: parseInt(formData.get('records')),
+        date: formData.get('date'),
+        status: 'Processing',
+        authorized: false, // Requires approval
+        createdBy: currentUser.firstName + ' ' + currentUser.lastName
+      };
+
+      mockData.batches.push(newBatch);
+      saveToLocalStorage();
+
+      showNotification('Batch created. Waiting for authorization.', 'info');
+      if (modal) modal.classList.remove('show');
+
+      // Refresh lists? 
+      if (window.renderAuthorizations) window.renderAuthorizations(); // Extension
+    };
+  }
+
+  // Close Logic
+  const closeModal = () => modal.classList.remove('show');
+  if (cancelBtn) cancelBtn.onclick = closeModal;
+  if (closeBtn) closeBtn.onclick = closeModal;
+
+  window.onclick = (e) => {
+    if (e.target === modal) closeModal();
+  };
+
+  // Form Submit
+  if (form) {
+    form.onsubmit = (e) => {
+      e.preventDefault();
+      const formData = new FormData(form);
+      const companyName = select.value;
+      const description = formData.get('description');
+      const date = formData.get('date');
+
+      if (!companyName) {
+        showNotification('Please select a company', 'warning');
+        return;
+      }
+
+      const newBatch = {
+        id: `B${String(mockData.batches.length + 1).padStart(3, '0')}`,
+        date: date,
+        description: description,
+        company: companyName, // Added company field
+        status: 'Pending',
+        records: Math.floor(Math.random() * 50) + 1,
+        createdBy: currentUser ? `${currentUser.firstName} ${currentUser.lastName}` : 'System'
+      };
+
+      mockData.batches.push(newBatch);
+      saveToLocalStorage();
+      renderBatchLogger();
+      showNotification('Batch Logged Successfully', 'success');
+      closeModal();
+    };
+  }
+
+  // Search Button (Filter)
+  window.filterBatchCompanies = function () {
+    const searchInput = document.querySelector('.search-input'); // Assuming there's a search input near the button
+    // Or if this refers to the search input on the page
+    if (initBatchLogger.searchInput) {
+      // logic
+    }
+    // For now, no-op or specific implementation
+  };
+}
 
 function renderBatchLogger() {
   const tbody = document.getElementById('batchTableBody');
@@ -1565,6 +1825,7 @@ function initLeads() {
           dateAdded: new Date().toISOString().split('T')[0]
         };
         mockData.leads.push(newLead);
+        saveToLocalStorage();
         showNotification('Lead added successfully!', 'success');
       }
 
@@ -1612,7 +1873,7 @@ window.handleLeadAction = function (select, leadId) {
   select.value = ""; // Reset selection
 
   if (action === 'convert') {
-    convertLeadToCompany(leadId);
+    openConversionModal(leadId);
   } else if (action === 'edit') {
     const lead = mockData.leads.find(l => l.id === leadId);
     if (lead) {
@@ -1657,8 +1918,31 @@ function getLeadStatusColor(status) {
   }
 }
 
+
+window.openConversionModal = function (leadId) {
+  const modal = document.getElementById('conversionModal');
+  if (modal) {
+    modal.classList.add('show');
+    const confirmBtn = document.getElementById('confirmConversionBtn');
+    // Clone to remove old listeners
+    const newBtn = confirmBtn.cloneNode(true);
+    confirmBtn.parentNode.replaceChild(newBtn, confirmBtn);
+
+    newBtn.onclick = () => {
+      convertLeadToCompany(leadId);
+      closeConversionModal();
+    };
+  }
+};
+
+window.closeConversionModal = function () {
+  const modal = document.getElementById('conversionModal');
+  if (modal) modal.classList.remove('show');
+};
+
 window.convertLeadToCompany = function (leadId) {
-  if (!confirm('Are you sure you want to convert this lead to a company?')) return;
+  // if (!confirm('Are you sure...')) return; // Removed native confirm
+
 
   try {
     const leadIndex = mockData.leads.findIndex(l => l.id === leadId);
@@ -1668,6 +1952,13 @@ window.convertLeadToCompany = function (leadId) {
     }
 
     const lead = mockData.leads[leadIndex];
+
+    // Check for duplicates
+    const exists = mockData.companies.some(c => c.name.toLowerCase() === lead.company.toLowerCase());
+    if (exists) {
+      showNotification('Company already exists!', 'error');
+      return;
+    }
 
     // Create new company
     const newCompany = {
@@ -1688,65 +1979,30 @@ window.convertLeadToCompany = function (leadId) {
 
     mockData.companies.push(newCompany);
 
-    // Remove lead
-    mockData.leads.splice(leadIndex, 1);
+    // Update lead status (do NOT remove)
+    lead.status = 'Converted';
+
+    // Persist changes
+    saveToLocalStorage();
 
     renderLeads();
-    renderCompanies(); // Refresh companies list
+    renderCompanies();
 
     showNotification(`Lead converted to company: ${lead.company}`, 'success');
+
+    // Optional: Auto-navigate or stay? User Plan says "Confirm... Appears under Companies tab".
+    // I will stay on leads to let user verify status, or navigate?
+    // User Step 4 says "Confirm the converted Company... Appears under the Companies tab".
+    // I'll leave navigation in.
     navigateToPage('companies');
+
   } catch (error) {
     console.error('Conversion error:', error);
     alert('Error converting lead: ' + error.message);
   }
 };
 
-function initBatchLogger() {
-  const modal = document.getElementById('batchLoggerModal');
-  const createBtn = document.getElementById('createBatchBtn');
-  const importBtn = document.getElementById('importBatchBtn');
-  const close = modal.querySelector('.close-modal');
-  const cancel = document.getElementById('cancelBatchLogger');
-  const form = document.getElementById('batchLoggerForm');
-
-  createBtn.onclick = () => {
-    modal.classList.add('show');
-    form.reset();
-  };
-
-  importBtn.onclick = () => {
-    alert('Import functionality would open a file picker here.');
-  };
-
-  const closeModal = () => modal.classList.remove('show');
-  close.onclick = closeModal;
-  cancel.onclick = closeModal;
-
-  window.onclick = (e) => {
-    if (e.target === modal) closeModal();
-  };
-
-  form.onsubmit = (e) => {
-    e.preventDefault();
-    const formData = new FormData(form);
-
-    const newBatch = {
-      id: `B${String(mockData.batches.length + 1).padStart(3, '0')} `,
-      date: formData.get('date'),
-      description: formData.get('description'),
-      status: 'Processing',
-      records: 0,
-      createdBy: currentUser.firstName + ' ' + currentUser.lastName,
-    };
-
-    mockData.batches.push(newBatch);
-    renderBatchLogger();
-    closeModal();
-
-    showNotification('Batch created successfully!', 'success');
-  };
-}
+// Duplicate initBatchLogger removed. The active one is defined earlier with company selection.
 
 // ===================================
 // INVOICES & STATEMENTS
@@ -1760,53 +2016,86 @@ function initPricingModal() {
   const form = document.getElementById('createPricingForm');
   const companySelect = document.getElementById('pricingCompanySelect');
 
-  if (!modal || !btn || !form) return;
-
-  btn.onclick = () => {
-    modal.classList.add('show');
-    form.reset();
-
-    // Populate companies
-    if (companySelect) {
-      companySelect.innerHTML = mockData.companies
-        .map(c => `<option value="${c.id}">${c.name}</option>`)
-        .join('');
+  // Req 6: Fix Add Pricing Button
+  window.openPricingModal = function () {
+    if (modal) {
+      modal.classList.add('show');
+      if (form) form.reset();
+      if (companySelect) {
+        companySelect.innerHTML = mockData.companies
+          .map(c => `<option value="${c.id}">${c.name}</option>`)
+          .join('');
+      }
+    } else {
+      console.error("Pricing Modal not found");
     }
   };
 
-  const closeModal = () => modal.classList.remove('show');
-  if (close) close.onclick = closeModal;
-  if (cancel) cancel.onclick = closeModal;
+  if (btn) {
+    btn.onclick = (e) => {
+      e.preventDefault();
+      window.openPricingModal();
+    };
+    // Removing any previous listeners by cloning (optional but safer)
+    // const newBtn = btn.cloneNode(true);
+    // btn.parentNode.replaceChild(newBtn, btn);
+    // newBtn.onclick = ... 
+    // But simple onclick assignment overrides previous onclick assignments.
+  }
+
+  if (close) close.onclick = () => modal.classList.remove('show');
+  if (cancel) cancel.onclick = () => modal.classList.remove('show');
 
   window.onclick = (e) => {
-    if (e.target === modal) closeModal();
+    if (e.target === modal) modal.classList.remove('show');
   };
 
-  form.onsubmit = (e) => {
-    e.preventDefault();
-    const formData = new FormData(form);
-    const companyId = parseInt(formData.get('companyId'));
-    const company = mockData.companies.find(c => c.id === companyId);
+  if (form) {
+    form.onsubmit = (e) => {
+      e.preventDefault();
+      const formData = new FormData(form);
+      const companyId = parseInt(formData.get('companyId'));
+      const company = mockData.companies.find(c => c.id === companyId);
 
-    if (company) {
-      const newPricing = {
-        id: mockData.pricing.length + 1,
-        parentId: company.parentId || '-',
-        companyId: `C-${String(company.id).padStart(3, '0')}`,
-        company: company.name,
-        product: formData.get('product'),
-        validFrom: formatDate(formData.get('validFrom')),
-        validTo: formatDate(formData.get('validTo')),
-        price: parseFloat(formData.get('price')),
-        active: true
-      };
+      if (company) {
+        const newPricing = {
+          id: mockData.pricing.length + 1,
+          parentId: company.parentId || '-',
+          companyId: `C-${String(company.id).padStart(3, '0')}`,
+          companyName: company.name,
+          productName: formData.get('product'),
+          rangeFrom: 1, // Default
+          rangeTo: 9999, // Default
+          price: parseFloat(formData.get('price')),
+          validFrom: formData.get('validFrom') || new Date().toISOString().split('T')[0],
+          status: 'Active'
+        };
 
-      mockData.pricing.push(newPricing);
-      renderPricing();
-      closeModal();
-      showNotification('Pricing added successfully!', 'success');
+        mockData.pricing.push(newPricing);
+        saveToLocalStorage();
+        renderPricing();
+        modal.classList.remove('show');
+        showNotification('Pricing added successfully!', 'success');
+      }
+    };
+  }
+}
+
+// Standardization Helper
+function standardizeData() {
+  const products = ['Product A', 'Product B', 'Product C', 'Product D', 'Product E', 'Product F'];
+  let changed = false;
+
+  mockData.transactions.forEach(t => {
+    if (!products.includes(t.product)) {
+      // Map random old products to new ones deterministically or random
+      const random = products[Math.floor(Math.random() * products.length)];
+      t.product = random;
+      changed = true;
     }
-  };
+  });
+
+  if (changed) saveToLocalStorage();
 }
 
 function initInvoiceModal() {
@@ -2130,10 +2419,10 @@ function initCompanyDetails() {
 
   function renderCompanyInfo(company) {
     companyInfoDisplay.innerHTML = `
-    < div class="info-item" >
+    <div class="info-item">
         <span class="info-label">Company Name</span>
         <span class="info-value">${company.name}</span>
-      </div >
+      </div>
       <div class="info-item">
         <span class="info-label">Type</span>
         <span class="info-value">${company.type}</span>
@@ -2193,7 +2482,7 @@ function initCompanyDetails() {
     document.getElementById('editCompanyIndustry').value = company.industry || '';
     document.getElementById('editCompanyFounded').value = company.foundedDate || '';
     document.getElementById('editCompanyAddress').value = company.address;
-    document.getElementById('editCompanyStatus').value = company.active.toString();
+    document.getElementById('editCompanyStatus').value = (company.active !== undefined ? company.active : true).toString();
 
     // Show form, hide display
     companyInfoDisplay.classList.add('hidden');
@@ -2239,7 +2528,16 @@ function initCompanyDetails() {
 // INITIALIZATION
 // ===================================
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+  // Load application data (Simulated File Store)
+  if (typeof showLoader === 'function') showLoader();
+  await loadData();
+  if (typeof hideLoader === 'function') hideLoader();
+
+  // Refresh badges after load
+  if (typeof updateAuthBadge === 'function') updateAuthBadge();
+  if (typeof updateWaitingRoomBadge === 'function') updateWaitingRoomBadge();
+
   // Check authentication first
   if (!checkAuth()) {
     return; // Will redirect to login
@@ -2526,8 +2824,8 @@ function detectExceptions() {
   const exceptions = [];
   mockData.transactions.forEach(t => {
     const pricing = mockData.pricing.find(p =>
-      p.companyName === t.company &&
-      p.productName === t.product &&
+      p.company === t.company &&
+      p.product === t.product &&
       p.status === 'Active'
     );
 
@@ -2816,57 +3114,7 @@ function initStatementModal() {
 // Actually, if we have two function declarations with the same name, the last one wins in the same scope.
 // So appending should work!
 
-function renderInvoices() {
-  const tbody = document.getElementById('invoicesTableBody');
-  const filteredInvoices = getFilteredInvoices();
 
-  if (currentTab === 'statements') {
-    const companies = mockData.companies;
-
-    tbody.innerHTML = companies.map(c => `
-      <tr>
-        <td><a href="#" class="table-link">${c.name}</a></td>
-        <td>-</td>
-        <td>-</td>
-        <td>-</td>
-        <td><span class="badge badge-success">Active</span></td>
-        <td><button class="btn btn-primary view-statement-btn" data-company="${c.name}">View Statement</button></td>
-        <td>-</td>
-      </tr>
-        `).join('');
-
-    document.querySelectorAll('.view-statement-btn').forEach(btn => {
-      btn.onclick = () => {
-        const company = btn.getAttribute('data-company');
-        const modal = document.getElementById('statementModal');
-        modal.setAttribute('data-company', company);
-        modal.classList.add('show');
-      };
-    });
-  } else {
-    // Standard invoice view
-    tbody.innerHTML = filteredInvoices.map(inv => `
-      <tr>
-        <td><a href="#" class="table-link">${inv.company}</a></td>
-        <td>${inv.transactions}</td>
-        <td>R${inv.unitPrice.toFixed(2)}</td>
-        <td>R${inv.totalPrice.toFixed(2)}</td>
-        <td>${formatDate(inv.dueDate)}</td>
-        <td>R${inv.paidAmount.toFixed(2)}</td>
-        <td>R${inv.discount.toFixed(2)}</td>
-        <td>R${inv.outstanding.toFixed(2)}</td>
-        <td>
-          <select class="status-dropdown ${inv.status.toLowerCase()}">
-            <option value="unpaid" ${inv.status === 'Unpaid' ? 'selected' : ''}>Unpaid ▼</option>
-            <option value="paid" ${inv.status === 'Paid' ? 'selected' : ''}>Paid</option>
-          </select>
-        </td>
-        <td><button class="btn btn-primary" onclick="viewStatement(${inv.id})">View</button></td>
-        <td>${inv.billingMonth}</td>
-      </tr>
-        `).join('');
-  }
-}
 
 // ===================================
 // INITIALIZATION OF NEW FEATURES
@@ -3340,6 +3588,7 @@ function initLogActivity() {
       };
 
       mockData.activities.push(newActivity);
+      saveToLocalStorage();
       renderCompanyActivities(newActivity.companyId);
       close();
       showNotification('Activity logged successfully!', 'success');
@@ -3371,17 +3620,17 @@ function initSupport() {
 
       // Render tickets based on selected tab
       const selectedTab = tab.getAttribute('data-support-tab');
-      renderTickets(mockData.tickets, selectedTab);
+      renderTickets(mockData.supportTickets, selectedTab);
     });
   });
 
   // Initial render
-  renderTickets(mockData.tickets, 'unresolved');
+  renderTickets(mockData.supportTickets, 'unresolved');
 
   if (searchInput) {
     searchInput.addEventListener('input', (e) => {
       const term = e.target.value.toLowerCase();
-      const filtered = mockData.tickets.filter(t =>
+      const filtered = mockData.supportTickets.filter(t =>
         t.subject.toLowerCase().includes(term) ||
         t.company.toLowerCase().includes(term) ||
         t.id.toLowerCase().includes(term)
@@ -3421,7 +3670,7 @@ function initSupport() {
 
     if (company) {
       const newTicket = {
-        id: `T${String(mockData.tickets.length + 1).padStart(3, '0')}`,
+        id: `T${String(mockData.supportTickets.length + 1).padStart(3, '0')}`,
         companyId: company.id,
         company: company.name,
         subject: formData.get('subject'),
@@ -3432,12 +3681,13 @@ function initSupport() {
         createdDate: new Date().toISOString().split('T')[0]
       };
 
-      mockData.tickets.push(newTicket);
+      mockData.supportTickets.push(newTicket);
+      saveToLocalStorage();
 
       // Re-render based on current active tab
       const activeTabObj = document.querySelector('[data-support-tab].active');
       const activeTab = activeTabObj ? activeTabObj.getAttribute('data-support-tab') : 'unresolved';
-      renderTickets(mockData.tickets, activeTab);
+      renderTickets(mockData.supportTickets, activeTab);
 
       closeModal();
       showNotification('Ticket created successfully!', 'success');
@@ -3591,6 +3841,7 @@ function initMarketing() {
           createdDate: new Date().toISOString().split('T')[0]
         };
         mockData.campaigns.push(newCampaign);
+        saveToLocalStorage();
         showNotification('Campaign created successfully!', 'success');
       }
 
@@ -3799,54 +4050,82 @@ function initRunBilling() {
     const inv = generatedInvoices[index];
     if (!inv) return;
 
-    let content = '';
-
     if (type === 'Invoice') {
-      content = `
-        INVOICE PREVIEW
-        ---------------------------
-        Company: ${inv.company}
-        Date: ${new Date().toISOString().split('T')[0]}
-        Period: ${inv.period}
-        
-        Description                  Amount
-        -----------------------------------
-        ${inv.product}           R ${inv.amount.toFixed(2)}
-        -----------------------------------
-        TOTAL DUE:               R ${inv.amount.toFixed(2)}
+      // Populate Invoice Modal with Preview Data
+      const modal = document.getElementById('invoiceModal');
+      if (!modal) return;
+
+      document.getElementById('invoiceNumber').textContent = 'PREVIEW';
+      document.getElementById('invoiceDate').textContent = new Date().toISOString().split('T')[0];
+      document.getElementById('invoiceDueDate').textContent = inv.period; // Using period as proxy for dates
+      document.getElementById('invoiceClientName').textContent = inv.company;
+      document.getElementById('invoiceClientAddress').textContent = 'Address on file';
+
+      const tbody = document.getElementById('invoiceLineItems');
+      tbody.innerHTML = `
+        <tr>
+          <td style="text-align: left;">${inv.product}</td>
+          <td style="text-align: center;">1</td>
+          <td style="text-align: right;">R${inv.amount.toFixed(2)}</td>
+          <td style="text-align: right;">R${inv.amount.toFixed(2)}</td>
+        </tr>
       `;
+
+      document.getElementById('invoiceSubtotal').textContent = `R${inv.amount.toFixed(2)}`;
+      document.getElementById('invoiceOutstanding').textContent = `R${inv.amount.toFixed(2)}`;
+      document.getElementById('invoicePaid').textContent = 'R0.00';
+
+      modal.classList.add('show');
+
     } else if (type === 'Usage') {
-      const transList = inv.transactions.map(t =>
-        `${t.date} | ${t.product.padEnd(10)} | ${t.volume} x R${t.unitPrice} = R${t.total.toFixed(2)}`
-      ).join('\n');
+      // Reuse Invoice Modal for Usage or Alert if no dedicated modal (Creating one effectively)
+      // Since we can't easily add HTML, we'll strip the invoice modal to show Usage
+      // OR better, use the Invoice Modal but change headers
+      const modal = document.getElementById('invoiceModal');
+      document.getElementById('invoiceNumber').textContent = 'USAGE REPORT';
+      document.getElementById('invoiceClientName').textContent = inv.company;
 
-      content = `
-        USAGE SPECIFICATION
-        ---------------------------
-        Company: ${inv.company}
-        Period: ${inv.period}
-        
-        Date       | Product    | Details
-        -----------------------------------
-        ${transList}
-        -----------------------------------
-        Total Usage:             R ${inv.amount.toFixed(2)}
-      `;
+      const tbody = document.getElementById('invoiceLineItems');
+      // Show transactions
+      const transList = inv.transactions.map(t => `
+        <tr>
+          <td style="text-align: left;">${t.date} - ${t.product}</td>
+          <td style="text-align: center;">${t.volume || 1}</td>
+          <td style="text-align: right;">R${t.unitPrice || 0}</td>
+          <td style="text-align: right;">R${(t.totalPrice || t.total || 0).toFixed(2)}</td>
+        </tr>
+      `).join('');
+      tbody.innerHTML = transList;
+
+      document.getElementById('invoiceSubtotal').textContent = `R${inv.amount.toFixed(2)}`;
+      document.getElementById('invoiceOutstanding').textContent = `R${inv.amount.toFixed(2)}`;
+
+      modal.classList.add('show');
+
     } else if (type === 'Statement') {
-      content = `
-        STATEMENT OF ACCOUNT
-        ---------------------------
-        Company: ${inv.company}
-        Date: ${new Date().toISOString().split('T')[0]}
-        
-        Opening Balance:         R 0.00
-        Current Invoice:         R ${inv.amount.toFixed(2)}
-        -----------------------------------
-        TOTAL PAYABLE:           R ${inv.amount.toFixed(2)}
-      `;
-    }
+      const modal = document.getElementById('statementModal');
+      if (modal) {
+        // Populate Statement Preview
+        document.getElementById('statementCompanyName').textContent = inv.company;
+        document.getElementById('statementPeriod').textContent = inv.period;
+        document.getElementById('statementTotalInvoiced').textContent = `R${inv.amount.toFixed(2)}`;
+        document.getElementById('statementTotalOutstanding').textContent = `R${inv.amount.toFixed(2)}`;
 
-    alert(content);
+        const tbody = document.getElementById('statementInvoices');
+        tbody.innerHTML = `
+                <tr>
+                    <td>PREVIEW</td>
+                    <td>${new Date().toISOString().split('T')[0]}</td>
+                    <td>-</td>
+                    <td style="text-align: right;">R${inv.amount.toFixed(2)}</td>
+                    <td style="text-align: right;">R0.00</td>
+                    <td style="text-align: right;">R${inv.amount.toFixed(2)}</td>
+                    <td>Generated</td>
+                </tr>
+            `;
+        modal.classList.add('show');
+      }
+    }
   };
 
   if (confirmBtn) {
@@ -3856,17 +4135,38 @@ function initRunBilling() {
       if (confirm(`Are you sure you want to generate and send ${generatedInvoices.length} invoices?`)) {
 
         generatedInvoices.forEach((inv, index) => {
+          // 1. Create Invoice Record
+          const billingMonth = new Date(dateFromInput.value).toLocaleString('default', { month: 'long', year: 'numeric' });
+          mockData.invoices.unshift({
+            id: `INV-${Date.now()}-${index}`,
+            company: inv.company,
+            transactions: inv.transactions.length,
+            unitPrice: inv.transactions.length > 0 ? (inv.amount / inv.transactions.length) : 0,
+            totalPrice: inv.amount,
+            paidAmount: 0,
+            discount: 0,
+            outstanding: inv.amount,
+            status: 'Unpaid',
+            dueDate: new Date(new Date().setDate(new Date().getDate() + 30)).toISOString().split('T')[0],
+            billingMonth: billingMonth,
+            items: inv.transactions
+          });
+
+          // 2. Add to Transactions as a record (optional, but good for history)
           mockData.transactions.unshift({
             id: `INV-${Date.now()}-${index}`,
             date: new Date().toISOString().split('T')[0],
             company: inv.company,
             user: 'System',
-            product: inv.product,
+            product: 'Invoice Generation',
             price: inv.amount,
             status: 'Sent'
           });
         });
 
+
+
+        saveToLocalStorage();
         renderTransactions();
 
         showNotification('Billing run completed successfully! Invoices sent.', 'success');
@@ -3947,7 +4247,7 @@ function initPricingModal() {
   const cancel = document.getElementById('cancelAddPrice');
   const form = document.getElementById('addPriceForm');
   const companySelect = document.getElementById('priceCompany');
-  const addPriceBtn = document.getElementById('addPriceBtn');
+  const addPriceBtn = document.getElementById('addPricingBtn');
 
   const closeModal = () => modal.classList.remove('show');
   close.onclick = closeModal;
@@ -3959,9 +4259,9 @@ function initPricingModal() {
 
   // Use event delegation for Add Price button to ensure it works
   document.addEventListener('click', (e) => {
-    if (e.target && e.target.id === 'addPriceBtn') {
+    if (e.target && e.target.id === 'addPricingBtn') {
       // Populate companies
-      companySelect.innerHTML = mockData.companies.map(c => `< option value = "${c.name}" > ${c.name}</option > `).join('');
+      companySelect.innerHTML = mockData.companies.map(c => `<option value="${c.name}">${c.name}</option>`).join('');
 
       // Reset form
       form.reset();
@@ -4002,6 +4302,7 @@ function initPricingModal() {
       totalPrice: 0
     });
 
+    saveToLocalStorage();
     renderPricing();
     closeModal();
     showNotification('Pricing configuration added successfully', 'success');
@@ -4015,7 +4316,7 @@ function resolveException(company, product) {
   const companySelect = document.getElementById('priceCompany');
 
   // Populate companies
-  companySelect.innerHTML = mockData.companies.map(c => `< option value = "${c.name}" > ${c.name}</option > `).join('');
+  companySelect.innerHTML = mockData.companies.map(c => `<option value="${c.name}">${c.name}</option>`).join('');
 
   // Pre-fill
   companySelect.value = company;
@@ -4454,7 +4755,7 @@ window.switchCompanyTab = function (tabName) {
 
 // Global function to update ticket status
 window.updateTicketStatus = function (ticketId, newStatus) {
-  const ticket = mockData.tickets.find(t => t.id === ticketId);
+  const ticket = mockData.supportTickets.find(t => t.id === ticketId);
   if (ticket) {
     ticket.status = newStatus;
     showNotification(`Ticket ${ticketId} status updated to ${newStatus}`, 'success');
@@ -4462,6 +4763,34 @@ window.updateTicketStatus = function (ticketId, newStatus) {
     // Re-render to move to correct tab
     const activeTabObj = document.querySelector('[data-support-tab].active');
     const activeTab = activeTabObj ? activeTabObj.getAttribute('data-support-tab') : 'unresolved';
-    renderTickets(mockData.tickets, activeTab);
+    renderTickets(mockData.supportTickets, activeTab);
   }
+};
+
+window.generateTestTransactions = function (companyName, count = 100) {
+  console.log(`Generating ${count} transactions for ${companyName}...`);
+  const products = ['Consulting', 'Software License', 'Hosting', 'Support', 'Training'];
+
+  for (let i = 0; i < count; i++) {
+    const randomProduct = products[Math.floor(Math.random() * products.length)];
+    const randomAmount = Math.floor(Math.random() * 5000) + 100;
+    const randomDate = new Date(Date.now() - Math.floor(Math.random() * 30 * 24 * 60 * 60 * 1000)).toISOString();
+
+    mockData.transactions.push({
+      id: `TXN${mockData.transactions.length + 1000}`,
+      company: companyName,
+      product: randomProduct,
+      amount: randomAmount,
+      date: randomDate,
+      status: 'Processed',
+      count: 1
+    });
+  }
+
+  saveToLocalStorage();
+  console.log('Transactions generated and saved.');
+  showNotification(`${count} transactions generated for ${companyName}`, 'success');
+
+  if (typeof renderTransactions === 'function' && currentPage === 'transactions') renderTransactions();
+  if (typeof renderDashboard === 'function' && currentPage === 'dashboard') renderDashboard();
 };

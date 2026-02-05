@@ -1,0 +1,586 @@
+{
+  "companies": [
+    {
+      "id": 1,
+      "name": "ABSA",
+      "type": "Parent",
+      "parentId": null,
+      "contact": "John Doe",
+      "email": "john@absa.co.za",
+      "phone": "+27 11 123 4567",
+      "address": "15 Troye Street, Johannesburg",
+      "registrationNumber": "1987/004321/06",
+      "taxId": "ZA1234567890",
+      "industry": "Banking",
+      "foundedDate": "1991-01-01",
+      "active": true,
+      "salesPerson": "John Sales"
+    },
+    {
+      "id": 2,
+      "name": "Capitec",
+      "type": "Parent",
+      "parentId": null,
+      "contact": "Jane Smith",
+      "email": "jane@capitec.co.za",
+      "phone": "+27 21 987 6543",
+      "address": "1 Quantum Street, Stellenbosch",
+      "registrationNumber": "2001/012345/06",
+      "taxId": "ZA9876543210",
+      "industry": "Banking",
+      "foundedDate": "2001-03-01",
+      "active": true,
+      "salesPerson": "Sarah Connor"
+    },
+    {
+      "id": 3,
+      "name": "Standard Bank",
+      "type": "Parent",
+      "parentId": null,
+      "contact": "Mike Brown",
+      "email": "mike@standardbank.co.za",
+      "phone": "+27 11 555 0000",
+      "address": "5 Simmonds Street, Johannesburg",
+      "registrationNumber": "1962/000738/06",
+      "taxId": "ZA5555555555",
+      "industry": "Banking",
+      "foundedDate": "1862-10-15",
+      "active": true,
+      "salesPerson": "Thabo Mahlafunya"
+    }
+  ],
+  "pricing": [
+    {
+      "id": 1,
+      "parentId": 0,
+      "parentName": "Capitec",
+      "companyId": "C1TNPVI4X5",
+      "companyName": "Capitec",
+      "productName": "AVS",
+      "rangeFrom": 1,
+      "rangeTo": 999999,
+      "price": 14,
+      "validFor": "1 Month",
+      "status": "Active"
+    },
+    {
+      "id": 2,
+      "parentId": 1,
+      "parentName": "ABSA",
+      "companyId": "1",
+      "companyName": "ABSA",
+      "productName": "AVS",
+      "rangeFrom": 1,
+      "rangeTo": 10,
+      "price": 14,
+      "validFor": "1 Month",
+      "status": "Active"
+    },
+    {
+      "id": 3,
+      "parentId": 1,
+      "parentName": "ABSA",
+      "companyId": "1",
+      "companyName": "ABSA",
+      "productName": "AVS",
+      "rangeFrom": 11,
+      "rangeTo": 2000,
+      "price": 12,
+      "validFor": "1 Month",
+      "status": "Active"
+    },
+    {
+      "id": 4,
+      "parentId": 1,
+      "parentName": "ABSA",
+      "companyId": "1",
+      "companyName": "ABSA",
+      "productName": "AVS",
+      "rangeFrom": 2001,
+      "rangeTo": 5000,
+      "price": 9,
+      "validFor": "1 Month",
+      "status": "Active"
+    },
+    {
+      "id": 5,
+      "parentId": 1,
+      "parentName": "ABSA",
+      "companyId": "1",
+      "companyName": "ABSA",
+      "productName": "AVS",
+      "rangeFrom": 5001,
+      "rangeTo": 10000,
+      "price": 6,
+      "validFor": "1 Month",
+      "status": "Active"
+    },
+    {
+      "id": 6,
+      "parentId": 1,
+      "parentName": "ABSA",
+      "companyId": "1",
+      "companyName": "ABSA",
+      "productName": "AVS",
+      "rangeFrom": 10001,
+      "rangeTo": 999999,
+      "price": 4,
+      "validFor": "1 Month",
+      "status": "Active"
+    }
+  ],
+  "pricedTransactions": [
+    {
+      "company": "ABSA",
+      "product": "AVS",
+      "transactions": 15,
+      "rangeFrom": 11,
+      "rangeTo": 2000,
+      "unitPrice": 12.00,
+      "totalPrice": 180.00,
+      "date": "2025-01-15"
+    },
+    {
+      "company": "CapiTec",
+      "product": "AVS",
+      "transactions": 1,
+      "rangeFrom": 1,
+      "rangeTo": 999999,
+      "unitPrice": 14.00,
+      "totalPrice": 14.00,
+      "date": "2025-01-15"
+    }
+  ],
+  "users": [
+    {
+      "firstName": "Thabo",
+      "lastName": "Mahlafunya",
+      "email": "thabo@billing.com",
+      "role": "Admin",
+      "userGroup": "Administrator",
+      "password": "••••••••",
+      "authorized": true,
+      "createdDate": "2024-01-01"
+    },
+    {
+      "firstName": "Sarah",
+      "lastName": "Connor",
+      "email": "sarah@billing.com",
+      "role": "User",
+      "userGroup": "Manager",
+      "password": "••••••••",
+      "authorized": true,
+      "createdDate": "2024-06-15"
+    },
+    {
+      "firstName": "John",
+      "lastName": "Sales",
+      "email": "john@billing.com",
+      "role": "User",
+      "userGroup": "Sales",
+      "assignedClients": [
+        "ABSA"
+      ],
+      "password": "••••••••",
+      "authorized": true,
+      "createdDate": "2025-01-20"
+    },
+    {
+      "firstName": "Alice",
+      "lastName": "Waiting",
+      "email": "alice@billing.com",
+      "role": "User",
+      "userGroup": "Sales",
+      "password": "••••••••",
+      "authorized": false,
+      "createdDate": "2025-01-22"
+    }
+  ],
+  "transactions": [
+    {
+      "id": 1,
+      "company": "ABSA",
+      "product": "IDV",
+      "date": "01/03/2025",
+      "count": 12
+    },
+    {
+      "id": 2,
+      "company": "ABSA",
+      "product": "Faceview",
+      "date": "01/03/2025",
+      "count": 3
+    },
+    {
+      "id": 3,
+      "company": "ABSA",
+      "product": "RIDV",
+      "date": "01/03/2025",
+      "count": 3
+    },
+    {
+      "id": 4,
+      "company": "ABSA",
+      "product": "Account Verification",
+      "date": "01/03/2025",
+      "count": 3
+    },
+    {
+      "id": 5,
+      "company": "ABSA",
+      "product": "IDV Photo",
+      "date": "01/03/2025",
+      "count": 3
+    },
+    {
+      "id": 6,
+      "company": "ABSA",
+      "product": "AVS",
+      "date": "01/03/2025",
+      "count": 15
+    },
+    {
+      "id": 7,
+      "company": "CapiTec",
+      "product": "AVS",
+      "date": "01/03/2025",
+      "count": 1
+    }
+  ],
+  "invoices": [
+    {
+      "id": 1,
+      "company": "ABSA",
+      "transactions": 15,
+      "unitPrice": 12.00,
+      "totalPrice": 180.00,
+      "dueDate": "31/01/2025",
+      "paidAmount": 90.00,
+      "discount": 0.00,
+      "outstanding": 90.00,
+      "status": "Unpaid",
+      "billingMonth": "January 2025"
+    },
+    {
+      "id": 2,
+      "company": "CapiTec",
+      "transactions": 1,
+      "unitPrice": 14.00,
+      "totalPrice": 14.00,
+      "dueDate": "31/01/2025",
+      "paidAmount": 7.00,
+      "discount": 0.00,
+      "outstanding": 7.00,
+      "status": "Unpaid",
+      "billingMonth": "January 2025"
+    }
+  ],
+  "usage": [
+    {
+      "company": "ABSA",
+      "username": "thabo_mahlafunya",
+      "firstName": "Thabo",
+      "lastName": "Mahlafunya",
+      "enquiryId": "10012",
+      "input": "9803085D••••• | Thabo | Mahlafunya",
+      "output": "9803085D••••• | Thabo | Mahlafunya",
+      "idNumber": "9803085D•••••",
+      "product": "IDV",
+      "transactions": 1
+    },
+    {
+      "company": "ABSA",
+      "username": "thabo_mahlafunya",
+      "firstName": "Thabo",
+      "lastName": "Mahlafunya",
+      "enquiryId": "10013",
+      "input": "9803085D••••• | Thabo | Mahlafunya",
+      "output": "9803085D••••• | Thabo | Mahlafunya",
+      "idNumber": "9803085D•••••",
+      "product": "Faceview",
+      "transactions": 1
+    },
+    {
+      "company": "ABSA",
+      "username": "thabo_mahlafunya",
+      "firstName": "Thabo",
+      "lastName": "Mahlafunya",
+      "enquiryId": "10014",
+      "input": "9803085D••••• | Thabo | Mahlafunya",
+      "output": "9803085D••••• | Thabo | Mahlafunya",
+      "idNumber": "9803085D•••••",
+      "product": "RIDV",
+      "transactions": 1
+    },
+    {
+      "company": "ABSA",
+      "username": "thabo_mahlafunya",
+      "firstName": "Thabo",
+      "lastName": "Mahlafunya",
+      "enquiryId": "10015",
+      "input": "9803085D••••• | Thabo | Mahlafunya",
+      "output": "9803085D••••• | Thabo | Mahlafunya",
+      "idNumber": "9803085D•••••",
+      "product": "Account Verification",
+      "transactions": 1
+    },
+    {
+      "company": "ABSA",
+      "username": "thabo_mahlafunya",
+      "firstName": "Thabo",
+      "lastName": "Mahlafunya",
+      "enquiryId": "10016",
+      "input": "9803085D••••• | Thabo | Mahlafunya",
+      "output": "9803085D••••• | Thabo | Mahlafunya",
+      "idNumber": "9803085D•••••",
+      "product": "IDV Photo",
+      "transactions": 1
+    },
+    {
+      "company": "ABSA",
+      "username": "thabo_mahlafunya",
+      "firstName": "Thabo",
+      "lastName": "Mahlafunya",
+      "enquiryId": "10017",
+      "input": "9803085D••••• | Thabo | Mahlafunya",
+      "output": "9803085D••••• | Thabo | Mahlafunya",
+      "idNumber": "9803085D•••••",
+      "product": "IDV",
+      "transactions": 1
+    },
+    {
+      "company": "ABSA",
+      "username": "thabo_mahlafunya",
+      "firstName": "Thabo",
+      "lastName": "Mahlafunya",
+      "enquiryId": "10018",
+      "input": "9803085D••••• | Thabo | Mahlafunya",
+      "output": "9803085D••••• | Thabo | Mahlafunya",
+      "idNumber": "9803085D•••••",
+      "product": "IDV",
+      "transactions": 1
+    }
+  ],
+  "companyUsers": [
+    {
+      "companyId": 1,
+      "username": "john_doe",
+      "firstName": "John",
+      "surname": "Doe",
+      "position": "Manager",
+      "lastLogin": "2025-01-03",
+      "password": "••••••••"
+    },
+    {
+      "companyId": 1,
+      "username": "jane_admin",
+      "firstName": "Jane",
+      "surname": "Admin",
+      "position": "Admin",
+      "lastLogin": "2025-01-02",
+      "password": "••••••••"
+    },
+    {
+      "companyId": 2,
+      "username": "sarah_smith",
+      "firstName": "Sarah",
+      "surname": "Smith",
+      "position": "User",
+      "lastLogin": "2025-01-01",
+      "password": "••••••••"
+    }
+  ],
+  "manualBilling": [
+    {
+      "id": "MB001",
+      "company": "ABSA",
+      "description": "Correction for Jan",
+      "amount": 500.00,
+      "date": "2025-01-15",
+      "status": "Pending",
+      "authorized": false,
+      "createdBy": "Sarah Connor",
+      "createdDate": "2025-01-15"
+    },
+    {
+      "id": "MB002",
+      "company": "CapiTec",
+      "description": "Ad-hoc service",
+      "amount": 1200.00,
+      "date": "2025-01-10",
+      "status": "Approved",
+      "authorized": true,
+      "createdBy": "Thabo Mahlafunya",
+      "createdDate": "2025-01-10",
+      "authorizedBy": "Thabo Mahlafunya",
+      "authorizedDate": "2025-01-11"
+    },
+    {
+      "id": "MB003",
+      "company": "Standard Bank",
+      "description": "Special discount",
+      "amount": 750.00,
+      "date": "2025-01-18",
+      "status": "Pending",
+      "authorized": false,
+      "createdBy": "Sarah Connor",
+      "createdDate": "2025-01-18"
+    }
+  ],
+  "batches": [
+    {
+      "id": "B001",
+      "date": "2025-01-20",
+      "description": "January Upload 1",
+      "status": "Processed",
+      "records": 150,
+      "authorized": true,
+      "createdBy": "Thabo Mahlafunya",
+      "authorizedBy": "Thabo Mahlafunya",
+      "authorizedDate": "2025-01-20"
+    },
+    {
+      "id": "B002",
+      "date": "2025-01-21",
+      "description": "January Upload 2",
+      "status": "Processing",
+      "records": 45,
+      "authorized": false,
+      "createdBy": "Sarah Connor",
+      "createdDate": "2025-01-21"
+    },
+    {
+      "id": "B003",
+      "date": "2025-01-22",
+      "description": "January Upload 3",
+      "status": "Pending",
+      "records": 80,
+      "authorized": false,
+      "createdBy": "Sarah Connor",
+      "createdDate": "2025-01-22"
+    }
+  ],
+  "leads": [
+    {
+      "id": 1,
+      "firstName": "Alice",
+      "lastName": "Wonder",
+      "company": "Wonderland Inc",
+      "email": "alice@wonderland.com",
+      "phone": "0821234567",
+      "status": "New",
+      "source": "Website",
+      "dateAdded": "2025-02-01",
+      "createdBy": "John Sales",
+      "assignedTo": "John Sales"
+    },
+    {
+      "id": 2,
+      "firstName": "Bob",
+      "lastName": "Builder",
+      "company": "BuildIt",
+      "email": "bob@buildit.co.za",
+      "phone": "0839876543",
+      "status": "Contacted",
+      "source": "Referral",
+      "dateAdded": "2025-02-02",
+      "createdBy": "Sarah Connor",
+      "assignedTo": "Sarah Connor"
+    },
+    {
+      "id": 3,
+      "firstName": "Charlie",
+      "lastName": "Chocolate",
+      "company": "Wonka Factory",
+      "email": "charlie@wonka.com",
+      "phone": "0721112222",
+      "status": "Qualified",
+      "source": "LinkedIn",
+      "dateAdded": "2025-02-03",
+      "createdBy": "Thabo Mahlafunya",
+      "assignedTo": "Thabo Mahlafunya"
+    }
+  ],
+  "activities": [
+    {
+      "id": 1,
+      "companyId": 1,
+      "type": "Call",
+      "date": "2025-01-15",
+      "description": "Discussed new pricing model",
+      "outcome": "Positive",
+      "user": "Thabo",
+      "createdBy": "John Sales"
+    },
+    {
+      "id": 2,
+      "companyId": 1,
+      "type": "Email",
+      "date": "2025-01-20",
+      "description": "Sent proposal",
+      "outcome": "Pending",
+      "user": "Thabo",
+      "createdBy": "John Sales"
+    },
+    {
+      "id": 3,
+      "companyId": 2,
+      "type": "Meeting",
+      "date": "2025-02-01",
+      "description": "Quarterly review",
+      "outcome": "Completed",
+      "user": "Sarah",
+      "createdBy": "Sarah Connor"
+    }
+  ],
+  "supportTickets": [
+    {
+      "id": "T001",
+      "companyId": 2,
+      "company": "CapiTec",
+      "subject": "Login Issue",
+      "description": "User cannot login",
+      "priority": "High",
+      "status": "Open",
+      "assignedTo": "Thabo Mahlafunya",
+      "createdBy": "Sarah Connor",
+      "createdDate": "2025-02-01"
+    },
+    {
+      "id": "T002",
+      "companyId": 1,
+      "company": "ABSA",
+      "subject": "Invoice Query",
+      "description": "Question about line item",
+      "priority": "Medium",
+      "status": "In Progress",
+      "assignedTo": "John Sales",
+      "createdBy": "John Sales",
+      "createdDate": "2025-02-02"
+    }
+  ],
+  "campaigns": [
+    {
+      "id": 1,
+      "name": "Q1 Newsletter",
+      "type": "Email Newsletter",
+      "status": "Sent",
+      "audience": "All Users",
+      "sentTo": 150,
+      "openRate": "45%",
+      "clickRate": "12%",
+      "createdDate": "2025-01-15"
+    },
+    {
+      "id": 2,
+      "name": "New Feature Announcement",
+      "type": "Product Update",
+      "status": "Draft",
+      "audience": "Active Companies",
+      "sentTo": 0,
+      "openRate": "-",
+      "clickRate": "-",
+      "createdDate": "2025-02-05"
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "companies": [],
+  "transactions": [],
+  "manualBilling": [],
+  "batches": [],
+  "usage": [],
+  "pricing": [],
+  "pricedTransactions": [],
+  "leads": [],
+  "activities": [],
+  "supportTickets": [],
+  "campaigns": [],
+  "users": [],
+  "auditLogs": [],
+  "exceptions": [],
+  "notifications": [],
+  "waitingRoom": [],
+  "invoices": [],
+  "companyUsers": []
+}

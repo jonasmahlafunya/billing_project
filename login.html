@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Billing Management System</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="login-container-split">
+        <!-- Left Side: Login Form -->
+        <div class="login-left">
+            <div class="login-brand">
+                <div class="logo-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                        <path d="M22 6l-10 7L2 6" />
+                    </svg>
+                </div>
+                <span>Billing Management</span>
+            </div>
+
+            <div class="login-form-wrapper">
+                <h1 class="login-title">Welcome Back</h1>
+                <p class="login-subtitle">Please enter your details to sign in.</p>
+
+                <div id="loginAlert" class="alert"></div>
+
+                <form id="loginForm" onsubmit="handleLogin(event)">
+                    <div class="form-group">
+                        <label class="form-label">Email Address</label>
+                        <input type="email" class="form-input" id="email" placeholder="Enter your email" required
+                            value="thabo@billing.com">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Password</label>
+                        <div class="password-input-group">
+                            <input type="password" class="form-input" id="password" placeholder="••••••••" required
+                                value="admin123">
+                            <span class="password-toggle" onclick="togglePassword()">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20"
+                                    height="20">
+                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                                    <circle cx="12" cy="12" r="3" />
+                                </svg>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="form-options">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="rememberMe"> Remember me
+                        </label>
+                        <a href="#" class="forgot-password">Forgot Password?</a>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-block btn-lg" id="loginBtn">Sign In</button>
+
+                    <div class="login-footer">
+                        Don't have an account? <a href="#">Sign up</a>
+                    </div>
+                </form>
+
+                <div class="demo-credentials" style="margin-top: 32px;">
+                    <h4>Demo Credentials</h4>
+                    <p><strong>Admin:</strong> thabo@billing.com / admin123</p>
+                    <p><strong>Manager:</strong> sarah@billing.com / admin123</p>
+                    <p><strong>Sales:</strong> john@billing.com / admin123</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Side: Illustration -->
+        <div class="login-right">
+            <div class="illustration-content">
+                <img src="login-illustration.png" alt="CRM Dashboard" class="login-illustration">
+                <h2>Manage your business with ease</h2>
+                <p>Track invoices, manage clients, and grow your business with our all-in-one billing solution.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function togglePassword() {
+            const input = document.getElementById('password');
+            input.type = input.type === 'password' ? 'text' : 'password';
+        }
+
+        const users = [
+            { firstName: 'Thabo', lastName: 'Mahlafunya', email: 'thabo@billing.com', role: 'Admin', userGroup: 'Administrator', password: 'admin123' },
+            { firstName: 'Sarah', lastName: 'Connor', email: 'sarah@billing.com', role: 'User', userGroup: 'Manager', password: 'admin123' },
+            { firstName: 'John', lastName: 'Sales', email: 'john@billing.com', role: 'User', userGroup: 'Sales', assignedClients: ['ABSA'], password: 'admin123' }
+        ];
+
+        async function handleLogin(event) {
+            event.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const btn = document.getElementById('loginBtn');
+            const alert = document.getElementById('loginAlert');
+
+            btn.disabled = true;
+            btn.textContent = 'Signing in...';
+
+            // Simulate API call
+            await new Promise(r => setTimeout(r, 800));
+
+            const user = users.find(u => u.email === email && u.password === password);
+
+            if (user) {
+                const sessionData = {
+                    email: user.email,
+                    role: user.role,
+                    userGroup: user.userGroup,
+                    firstName: user.firstName,
+                    lastName: user.lastName,
+                    assignedClients: user.assignedClients || [],
+                    loginTime: new Date().toISOString()
+                };
+                localStorage.setItem('billingUser', JSON.stringify(sessionData));
+                window.location.href = 'index.html';
+            } else {
+                alert.textContent = 'Invalid credentials';
+                alert.className = 'alert alert-error show';
+                btn.disabled = false;
+                btn.textContent = 'Sign In';
+            }
+        }
+    </script>
+</body>
+
+</html>

@@ -13,9 +13,10 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-
+  <link rel="stylesheet" href="dashboard-reorder.css">
   <!-- Styles -->
   <link rel="stylesheet" href="styles.css">
+
   <link rel="stylesheet" href="ui-improvements.css">
   <link rel="stylesheet" href="final-ui-refinements.css">
   <link rel="stylesheet" href="audit-styles.css">
@@ -2420,26 +2421,26 @@
 
 </html>
 <!-- Audit Logs Page -->
-  <!-- Status Change Modal -->
-  <div id="changeStatusModal" class="modal">
-    <div class="modal-content">
-      <span class="close-modal" onclick="closeStatusChangeModal()">&times;</span>
-      <h2>Change Status</h2>
-      <div id="currentStatusInfo"></div>
-      <form id="changeStatusForm">
-        <div class="form-group">
-          <label>New Status</label>
-          <select id="newStatusSelect" class="form-input">
-            <option value="Approved">Approved</option>
-            <option value="Rejected">Rejected</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label>Reason (Required)</label>
-          <textarea id="statusChangeReason" class="form-input" required placeholder="Enter reason for status change..."></textarea>
-        </div>
-        <button type="submit" class="btn-primary">Change Status</button>
-      </form>
-    </div>
+<!-- Status Change Modal -->
+<div id="changeStatusModal" class="modal">
+  <div class="modal-content">
+    <span class="close-modal" onclick="closeStatusChangeModal()">&times;</span>
+    <h2>Change Status</h2>
+    <div id="currentStatusInfo"></div>
+    <form id="changeStatusForm">
+      <div class="form-group">
+        <label>New Status</label>
+        <select id="newStatusSelect" class="form-input">
+          <option value="Approved">Approved</option>
+          <option value="Rejected">Rejected</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Reason (Required)</label>
+        <textarea id="statusChangeReason" class="form-input" required
+          placeholder="Enter reason for status change..."></textarea>
+      </div>
+      <button type="submit" class="btn-primary">Change Status</button>
+    </form>
   </div>
-
+</div>

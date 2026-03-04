@@ -1,0 +1,195 @@
+/* ===================================
+   REMOVE HEADER WHITE SPACING
+   Professional, clean page headers
+   =================================== */
+
+/* ===================================
+   1. REMOVE PAGE CONTAINER PADDING
+   =================================== */
+
+#batch-logger-page,
+#manual-billing-page,
+#usage-page,
+#pricing-page,
+#leads-page,
+#activities-page,
+#support-page,
+#marketing-page,
+#run-billing-page,
+#priced-transactions-page,
+#authorization-page,
+#exceptions-page,
+#waiting-room-page,
+#settings-page {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+/* ===================================
+   2. REMOVE FILTER SECTION TOP SPACING
+   =================================== */
+
+.filter-section {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    border-radius: 0 !important;
+}
+
+.filters {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    border-radius: 0 !important;
+}
+
+/* ===================================
+   3. REMOVE CARD TOP SPACING
+   =================================== */
+
+.page-container .card:first-of-type,
+.page-container>.card {
+    margin-top: 0 !important;
+    border-top-left-radius: 0 !important;
+    border-top-right-radius: 0 !important;
+}
+
+/* ===================================
+   4. REMOVE ALL PAGE HEADER GAPS
+   =================================== */
+
+.page-container>*:first-child {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+}
+
+/* ===================================
+   5. STANDARDIZE FILTER TO CARD SPACING
+   =================================== */
+
+.filter-section+.card,
+.filters+.card {
+    margin-top: 0 !important;
+    border-top: 1px solid #e2e8f0;
+}
+
+/* ===================================
+   6. REMOVE TABS TOP SPACING
+   =================================== */
+
+.tabs {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+}
+
+.tab-content {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+}
+
+/* ===================================
+   7. SETTINGS PAGE SPECIFIC
+   =================================== */
+
+#settings-page .filters {
+    margin-top: 0 !important;
+}
+
+#settings-page .tabs {
+    margin-top: 0 !important;
+    border-top: none !important;
+}
+
+/* ===================================
+   8. AUTHORIZATION PAGE
+   =================================== */
+
+#authorization-page .card {
+    margin-top: 0 !important;
+}
+
+/* ===================================
+   9. PROFESSIONAL HEADER STYLING
+   =================================== */
+
+.filter-section,
+.filters {
+    background: #f8fafc;
+    border-bottom: 2px solid #e2e8f0;
+    padding: 14px 20px !important;
+}
+
+/* ===================================
+   10. SEAMLESS PAGE TRANSITIONS
+   =================================== */
+
+.page-container {
+    background: white;
+}
+
+.page-container>.filter-section:first-child,
+.page-container>.filters:first-child {
+    border-top: none !important;
+}
+
+/* ===================================
+   11. REMOVE CARD HEADER SPACING
+   =================================== */
+
+.card-header {
+    margin: 0 !important;
+    padding: 16px 20px !important;
+}
+
+.card-body:first-child {
+    padding-top: 0 !important;
+}
+
+/* ===================================
+   12. COMPACT LAYOUT
+   =================================== */
+
+.page-container>*+* {
+    margin-top: 0 !important;
+}
+
+/* ===================================
+   13. PROFESSIONAL BORDERS
+   =================================== */
+
+.card {
+    border-top: none !important;
+    border-radius: 0 !important;
+}
+
+.filter-section {
+    border-top: none !important;
+    border-left: none !important;
+    border-right: none !important;
+}
+
+/* ===================================
+   14. REMOVE UNNECESSARY GAPS
+   =================================== */
+
+.page-container .card+.page-footer {
+    margin-top: 0 !important;
+    border-top: 1px solid #e2e8f0;
+}
+
+/* ===================================
+   15. CLEAN VISUAL HIERARCHY
+   =================================== */
+
+/* Filter section at top */
+.filter-section {
+    order: 1;
+}
+
+/* Card content in middle */
+.card {
+    order: 2;
+}
+
+/* Footer at bottom */
+.page-footer {
+    order: 3;
+}

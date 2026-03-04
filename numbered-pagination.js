@@ -24,6 +24,32 @@ function initTablePagination(tableId, itemsPerPage = 10) {
 
 // Get paginated data
 function getPaginatedTableData(data, tableId, itemsPerPage = 10) {
+    // Check if tableId is a key (legacy) or ID
+    if (!tableId.endsWith('Table') && !document.getElementById(tableId)) {
+        // It's likely a key like 'pricing', map it
+        const tableMap = {
+            'companies': 'companiesTable',
+            'transactions': 'transactionsTable',
+            'invoices': 'invoicesTable',
+            'usage': 'usageTable',
+            'pricing': 'pricingTable',
+            'leads': 'leadsTable',
+            'activities': 'activitiesTable',
+            'support': 'supportTable',
+            'marketing': 'marketingTable',
+            'runBilling': 'runBillingTable',
+            'pricedTransactions': 'pricedTransactionsTable',
+            'batches': 'batchesTable',
+            'manualBilling': 'manualBillingTable',
+            'exceptions': 'exceptionsTable',
+            'waitingRoom': 'waitingRoomTable',
+            'users': 'usersTable',
+            'auditLogs': 'auditLogsTable',
+            'companyUsers': 'companyUsersTable'
+        };
+        tableId = tableMap[tableId] || tableId + 'Table';
+    }
+
     if (!paginationState[tableId]) {
         initTablePagination(tableId, itemsPerPage);
     }
@@ -45,15 +71,51 @@ function getPaginatedTableData(data, tableId, itemsPerPage = 10) {
 
 // Render pagination controls with page numbers
 function renderNumberedPagination(tableId, containerId) {
+    // Check for legacy signature: (containerId, totalItems, tableKey)
+    if (typeof containerId === 'number' && arguments.length >= 3) {
+        const legacyContainerId = tableId; // 1st arg was containerId
+        const legacyTableKey = arguments[2]; // 3rd arg was tableKey
+
+        // Map tableKey to tableId
+        const tableMap = {
+            'companies': 'companiesTable',
+            'transactions': 'transactionsTable',
+            'invoices': 'invoicesTable',
+            'usage': 'usageTable',
+            'pricing': 'pricingTable',
+            'leads': 'leadsTable',
+            'activities': 'activitiesTable',
+            'support': 'supportTable',
+            'marketing': 'marketingTable',
+            'runBilling': 'runBillingTable',
+            'pricedTransactions': 'pricedTransactionsTable',
+            'batches': 'batchesTable',
+            'manualBilling': 'manualBillingTable',
+            'exceptions': 'exceptionsTable',
+            'waitingRoom': 'waitingRoomTable',
+            'users': 'usersTable',
+            'auditLogs': 'auditLogsTable',
+            'companyUsers': 'companyUsersTable'
+        };
+
+        const mappedTableId = tableMap[legacyTableKey] || legacyTableKey + 'Table';
+        return renderNumberedPagination(mappedTableId, legacyContainerId);
+    }
+
     const container = document.getElementById(containerId);
+    const table = document.getElementById(tableId);
+
+    // Only warn if table exists but container is missing
     if (!container) {
-        console.warn(`Pagination container not found: ${containerId}`);
+        if (table) {
+            console.warn(`Pagination container not found: ${containerId} for table: ${tableId}`);
+        }
         return;
     }
 
     const state = paginationState[tableId];
     if (!state || state.totalPages <= 1) {
-        container.innerHTML = '';
+        if (container) container.innerHTML = '';
         return;
     }
 

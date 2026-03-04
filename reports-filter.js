@@ -15,7 +15,8 @@ function initReportsDateFilter() {
     const clearFilterBtn = document.getElementById('clearReportsFilter');
 
     if (!startDateInput || !endDateInput) {
-        console.warn('Date filter inputs not found');
+        // Filters were removed from UI, so just return silently
+        // console.log('Date filter inputs not found (this is expected if filters are disabled)');
         return;
     }
 

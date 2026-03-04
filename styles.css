@@ -332,13 +332,13 @@ body {
 .metrics-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: var(--spacing-lg);
-  margin-bottom: var(--spacing-xl);
+  gap: var(--spacing-xl);
+  margin-bottom: var(--spacing-2xl);
 }
 
 .metric-card {
   background-color: var(--color-white);
-  padding: var(--spacing-lg);
+  padding: var(--spacing-xl);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-sm);
   border: 1px solid var(--color-gray-200);
@@ -371,7 +371,7 @@ body {
   /* Softer, more diffuse shadow */
   border: none;
   /* Remove border for cleaner look */
-  margin-bottom: var(--spacing-lg);
+  margin-bottom: var(--spacing-2xl);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
@@ -4698,4 +4698,119 @@ body.form-open {
 
 .consolidated-row:hover {
   background-color: #e9ecef !important;
+}
+
+/* ===================================
+   DASHBOARD CHART SPACING
+   =================================== */
+
+/* Dashboard Charts Grid - Better spacing between visualizations */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+  gap: var(--spacing-2xl);
+  margin-bottom: var(--spacing-2xl);
+}
+
+/* Two-column chart layout */
+.charts-row {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--spacing-2xl);
+  margin-bottom: var(--spacing-2xl);
+}
+
+/* Three-column chart layout */
+.charts-row-three {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spacing-2xl);
+  margin-bottom: var(--spacing-2xl);
+}
+
+/* Individual chart containers */
+.chart-container {
+  background: var(--color-white);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-xl);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--color-gray-200);
+  margin-bottom: var(--spacing-xl);
+}
+
+.chart-container h3,
+.chart-container h2 {
+  margin-bottom: var(--spacing-lg);
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  color: var(--color-gray-900);
+}
+
+/* Chart canvas spacing */
+.chart-wrapper {
+  margin-top: var(--spacing-lg);
+  padding: var(--spacing-md);
+}
+
+/* Activity feed spacing */
+.activity-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.activity-item {
+  padding: var(--spacing-md);
+  border-bottom: 1px solid var(--color-gray-100);
+}
+
+.activity-item:last-child {
+  border-bottom: none;
+}
+
+/* Ensure metric cards have better spacing */
+.metric-card {
+  background-color: var(--color-white);
+  padding: var(--spacing-xl);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--color-gray-200);
+  transition: all var(--transition-base);
+  margin-bottom: var(--spacing-lg);
+}
+
+/* Add more breathing room between sections */
+.dashboard-section {
+  margin-bottom: var(--spacing-2xl);
+}
+
+.dashboard-section+.dashboard-section {
+  margin-top: var(--spacing-2xl);
+}
+
+/* Responsive spacing adjustments */
+@media (max-width: 1200px) {
+
+  .charts-row,
+  .charts-row-three {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-xl);
+  }
+
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-xl);
+  }
+}
+
+@media (max-width: 768px) {
+  .chart-container {
+    padding: var(--spacing-lg);
+  }
+
+  .charts-row,
+  .charts-row-three,
+  .dashboard-grid {
+    gap: var(--spacing-lg);
+  }
 }

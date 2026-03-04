@@ -1,0 +1,178 @@
+/* ===================================
+   TABLE SIZE REDUCTION - 40%
+   Reduces all table dimensions by 40%
+   =================================== */
+
+/* ===================================
+   1. TABLE FONT SIZE REDUCTION
+   =================================== */
+
+.data-table {
+    font-size: 7.56px !important;
+    /* 12.6px * 0.6 = 7.56px (40% reduction) */
+}
+
+.data-table th {
+    font-size: 6.6px !important;
+    /* 11px * 0.6 = 6.6px */
+    padding: 7.2px 9.6px !important;
+    /* 12px 16px * 0.6 */
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+.data-table td {
+    font-size: 7.56px !important;
+    /* 12.6px * 0.6 */
+    padding: 7.2px 9.6px !important;
+    /* 12px 16px * 0.6 */
+    height: 27px !important;
+    /* 45px * 0.6 */
+    max-height: 27px !important;
+}
+
+/* ===================================
+   2. TABLE CONTAINER REDUCTION
+   =================================== */
+
+.table-container {
+    min-height: 300px !important;
+    /* 500px * 0.6 */
+    max-height: 300px !important;
+}
+
+/* ===================================
+   3. CARD HEIGHT ADJUSTMENT
+   =================================== */
+
+.page-container .card {
+    min-height: 390px !important;
+    /* 650px * 0.6 */
+}
+
+.table-wrapper {
+    min-height: 300px !important;
+    /* 500px * 0.6 */
+    max-height: 300px !important;
+}
+
+/* ===================================
+   4. ROW HEIGHT REDUCTION
+   =================================== */
+
+.data-table tbody tr {
+    height: 27px !important;
+    /* 45px * 0.6 */
+    max-height: 27px !important;
+}
+
+.data-table thead tr {
+    height: 30px !important;
+    /* 50px * 0.6 */
+}
+
+/* ===================================
+   5. STATUS INDICATORS
+   =================================== */
+
+.status-indicator {
+    padding: 3px 6px !important;
+    /* 5px 10px * 0.6 */
+    font-size: 6.6px !important;
+    /* 11px * 0.6 */
+    border-radius: 3.6px !important;
+    /* 6px * 0.6 */
+}
+
+/* ===================================
+   6. TABLE ACTIONS/BUTTONS
+   =================================== */
+
+.data-table button,
+.data-table .btn {
+    padding: 3.6px 7.2px !important;
+    /* 6px 12px * 0.6 */
+    font-size: 7.2px !important;
+    /* 12px * 0.6 */
+    height: 19.2px !important;
+    /* 32px * 0.6 */
+}
+
+/* ===================================
+   7. PAGINATION CONTROLS
+   =================================== */
+
+.pagination-controls {
+    min-height: 30px !important;
+    /* 50px * 0.6 */
+    padding: 7.2px 0 !important;
+    /* 12px * 0.6 */
+}
+
+.pagination-btn,
+.page-number {
+    min-width: 21.6px !important;
+    /* 36px * 0.6 */
+    height: 21.6px !important;
+    padding: 0 7.2px !important;
+    /* 0 12px * 0.6 */
+    font-size: 7.8px !important;
+    /* 13px * 0.6 */
+}
+
+.pagination-info {
+    font-size: 7.8px !important;
+    /* 13px * 0.6 */
+}
+
+/* ===================================
+   8. COLUMN WIDTHS
+   =================================== */
+
+.data-table th,
+.data-table td {
+    max-width: none;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* ===================================
+   9. COMPACT TABLE SPACING
+   =================================== */
+
+.ultra-compact-table th,
+.ultra-compact-table td {
+    padding: 6px 8px !important;
+    /* Even more compact */
+}
+
+/* ===================================
+   10. RESPONSIVE ADJUSTMENTS
+   =================================== */
+
+@media (max-width: 1200px) {
+    .table-container {
+        min-height: 240px !important;
+        /* 400px * 0.6 */
+        max-height: 240px !important;
+    }
+
+    .page-container .card {
+        min-height: 330px !important;
+        /* 550px * 0.6 */
+    }
+}
+
+@media (max-width: 768px) {
+    .table-container {
+        min-height: 210px !important;
+        /* 350px * 0.6 */
+        max-height: 210px !important;
+    }
+
+    .data-table {
+        font-size: 6.6px !important;
+    }
+}

@@ -19,6 +19,18 @@
 
   <link rel="stylesheet" href="ui-improvements.css">
   <link rel="stylesheet" href="final-ui-refinements.css">
+  <link rel="stylesheet" href="page-layout-standardization.css">
+  <link rel="stylesheet" href="table-filter-refinements.css">
+  <link rel="stylesheet" href="table-size-reduction.css">
+  <link rel="stylesheet" href="table-standardization.css">
+  <link rel="stylesheet" href="remove-header-spacing.css">
+  <link rel="stylesheet" href="hide-duplicate-exports.css">
+
+
+
+
+
+
   <link rel="stylesheet" href="audit-styles.css">
 
 
@@ -656,6 +668,8 @@
                     </tbody>
                   </table>
                 </div>
+                <div class="pagination-controls" id="companiesPagination"></div>
+
               </div>
             </div>
           </div>
@@ -860,30 +874,7 @@
 
         <!-- Reports Page -->
         <div id="reports-page" class="page-container hidden">
-          <div class="filter-section">
-            <div class="filter-group">
-              <label>Start Date</label>
-              <input type="date" id="reportsStartDate" class="form-input">
-            </div>
-            <div class="filter-group">
-              <label>End Date</label>
-              <input type="date" id="reportsEndDate" class="form-input">
-            </div>
-            <div class="filter-actions">
-              <button class="btn-primary" id="applyReportsFilter">Apply Filter</button>
-              <button class="btn-secondary" id="clearReportsFilter">Clear</button>
-            </div>
-            <div class="filter-group" style="margin-left: auto;">
-              <label>Search</label>
-              <input type="text" class="search-input form-input" placeholder="Search invoices..."
-                onkeyup="filterTable('invoicesTable', this.value)">
-            </div>
-            <div class="filter-group">
-              <label>&nbsp;</label>
-              <button class="btn-secondary" onclick="exportTableToCSV('invoicesTable', 'invoices')">Export
-                CSV</button>
-            </div>
-          </div>
+
 
           <div class="tabs">
             <button class="tab" data-tab="paid">Paid Invoices</button>
@@ -921,26 +912,28 @@
           </div>
         </div>
 
+        <div class="pagination-controls" id="invoicesPagination"></div>
         <!-- Usage Page -->
         <div id="usage-page" class="page-container hidden">
           <div class="filters">
             <div class="filter-group">
-              <select id="entriesPerPage">
-                <option value="10">10</option>
-                <option value="25">25</option>
-                <option value="50">50</option>
-                <option value="100">100</option>
-              </select>
-              <span class="filter-label">entries per page</span>
-            </div>
-            <div class="filter-group" style="margin-left: auto;">
-              <input type="text" class="search-input" id="usageSearch" placeholder="Search usage...">
+              <label>Start Date</label>
+              <input type="date" id="usageStartDate" class="form-input">
             </div>
             <div class="filter-group">
-              <button class="btn btn-secondary btn-sm" onclick="exportTableToCSV('usageTable', 'usage')">Export
-                CSV</button>
-              <button class="btn btn-primary btn-sm" onclick="openUsageModal()" style="margin-left: 10px;">Generate
-                Usage Transaction</button>
+              <label>End Date</label>
+              <input type="date" id="usageEndDate" class="form-input">
+            </div>
+            <div class="filter-group">
+              <button class="btn btn-primary" id="applyUsageFilter">Apply Filter</button>
+              <button class="btn btn-secondary" id="clearUsageFilter">Clear</button>
+            </div>
+            <div class="filter-group" style="margin-left: auto;">
+              <label>Search</label>
+              <input type="text" class="search-input form-input" id="usageSearch" placeholder="Search usage...">
+            </div>
+            <div class="filter-group">
+              <button class="btn btn-primary" onclick="openUsageModal()">Generate Usage Transaction</button>
             </div>
           </div>
 
@@ -966,9 +959,8 @@
                   </tbody>
                 </table>
               </div>
-              <div class="pagination-info">
-                Showing <span id="usageCount">0</span> entries
-              </div>
+
+              <div class="pagination-controls" id="usagePagination"></div>
             </div>
           </div>
         </div>
@@ -1005,6 +997,7 @@
                   </tbody>
                 </table>
               </div>
+              <div class="pagination-controls" id="leadsPagination"></div>
             </div>
           </div>
         </div>
@@ -1091,7 +1084,8 @@
               <button class="btn btn-primary" id="createCampaignBtn">New Campaign</button>
             </div>
             <div class="filter-group" style="margin-left: auto;">
-              <input type="text" class="search-input" id="marketingSearch" placeholder="Search campaigns...">
+              <input type="text" class="search-input" id="marketingSearch" placeholder="Search campaigns..."
+                onkeyup="filterTable('marketingTable', this.value)">
             </div>
           </div>
 
@@ -1118,6 +1112,7 @@
               </div>
             </div>
           </div>
+          <div class="pagination-controls" id="marketingPagination"></div>
         </div>
 
         <!-- Run Billing Page -->
@@ -1173,20 +1168,23 @@
         <div id="pricing-page" class="page-container hidden">
           <div class="filters">
             <div class="filter-group">
-              <select id="pricingEntriesPerPage">
-                <option value="10">10</option>
-                <option value="25">25</option>
-                <option value="50">50</option>
-                <option value="100">100</option>
-              </select>
-              <span class="filter-label">entries per page</span>
+              <label>Start Date</label>
+              <input type="date" id="pricingStartDate" class="form-input">
+            </div>
+            <div class="filter-group">
+              <label>End Date</label>
+              <input type="date" id="pricingEndDate" class="form-input">
+            </div>
+            <div class="filter-group">
+              <button class="btn btn-primary" id="applyPricingFilter">Apply Filter</button>
+              <button class="btn btn-secondary" id="clearPricingFilter">Clear</button>
             </div>
             <div class="filter-group" style="margin-left: auto;">
-              <input type="text" class="search-input" id="pricingSearch" placeholder="Search pricing...">
+              <label>Search</label>
+              <input type="text" class="search-input form-input" id="pricingSearch" placeholder="Search pricing...">
             </div>
             <div class="filter-group">
               <button class="btn btn-primary" id="addPricingBtn">Add Pricing</button>
-
             </div>
           </div>
 
@@ -1220,6 +1218,7 @@
                   <button class="btn btn-primary">Bulk Import</button>
                 </div>
               </div>
+              <div class="pagination-controls" id="pricingPagination"></div>
             </div>
           </div>
         </div>
@@ -1271,6 +1270,7 @@
             </div>
           </div>
         </div>
+        <div class="pagination-controls" id="pricedTransactionsPagination"></div>
 
         <!-- Authorizations Page -->
         <div id="authorizations-page" class="page-container hidden">
@@ -1359,13 +1359,13 @@
         <!-- Settings Page -->
         <div id="settings-page" class="page-container hidden">
           <div class="filters">
-            <div class="filter-group" style="margin-left: auto;">
-              <input type="text" class="search-input" placeholder="Search users..."
-                onkeyup="filterTable('usersTable', this.value)">
-            </div>
             <div class="filter-group">
               <button class="btn btn-secondary btn-sm" onclick="exportTableToCSV('usersTable', 'users')">Export
                 CSV</button>
+            </div>
+            <div class="filter-group" style="margin-left: auto;">
+              <input type="text" class="search-input" placeholder="Search users..."
+                onkeyup="filterTable('usersTable', this.value)">
             </div>
           </div>
           <div class="tabs">
@@ -1455,19 +1455,14 @@
         <div id="batch-logger-page" class="page-container hidden">
           <div class="filters">
             <div class="filter-group">
-              <button class="btn btn-primary" id="createBatchBtn">Log Batch</button>
-              <button class="btn btn-secondary" id="importBatchBtn" style="margin-left: 10px;">Import
-                Batch</button>
+              <button class="btn btn-primary" id="openUploadModal">Upload Batch</button>
             </div>
             <div class="filter-group" style="margin-left: auto;">
-              <input type="text" class="search-input" placeholder="Search batches..."
+              <input type="text" class="search-input" id="batchSearch" placeholder="Search batches..."
                 onkeyup="filterTable('batchTable', this.value)">
             </div>
-            <div class="filter-group">
-              <button class="btn btn-secondary btn-sm" onclick="exportTableToCSV('batchTable', 'batches')">Export
-                CSV</button>
-            </div>
           </div>
+
           <div class="card">
             <div class="card-body">
               <div class="table-container">
@@ -1491,7 +1486,9 @@
               </div>
             </div>
           </div>
+          <div class="pagination-controls" id="batchPagination"></div>
         </div>
+
 
 
         <!-- Manual Billing Page -->
@@ -1502,11 +1499,8 @@
               <button class="btn btn-primary" id="createBillingBtn">Create New</button>
             </div>
             <div class="filter-group" style="margin-left: auto;">
-              <input type="text" class="search-input" id="manualBillingSearch" placeholder="Search billing...">
-            </div>
-            <div class="filter-group">
-              <button class="btn btn-secondary btn-sm"
-                onclick="exportTableToCSV('manualBillingTable', 'manual_billing')">Export CSV</button>
+              <input type="text" class="search-input" id="manualBillingSearch" placeholder="Search billing..."
+                onkeyup="filterTable('manualBillingTable', this.value)">
             </div>
           </div>
           <div class="card">
@@ -1531,23 +1525,23 @@
                   </tbody>
                 </table>
               </div>
+              <div class="pagination-controls" id="manualBillingPagination"></div>
             </div>
           </div>
         </div>
 
         <!-- Exceptions Page -->
+
         <div id="exceptions-page" class="page-container hidden">
           <div class="filters">
             <div class="filter-group">
               <button class="btn btn-secondary" onclick="refreshExceptions()">Refresh</button>
+              <button class="btn btn-secondary btn-sm"
+                onclick="exportTableToCSV('exceptionsTable', 'exceptions')">Export CSV</button>
             </div>
             <div class="filter-group" style="margin-left: auto;">
               <input type="text" class="search-input" placeholder="Search exceptions..."
                 onkeyup="filterTable('exceptionsTable', this.value)">
-            </div>
-            <div class="filter-group">
-              <button class="btn btn-secondary btn-sm"
-                onclick="exportTableToCSV('exceptionsTable', 'exceptions')">Export CSV</button>
             </div>
           </div>
           <div class="card">
@@ -1572,6 +1566,7 @@
               </div>
             </div>
           </div>
+          <div class="pagination-controls" id="exceptionsPagination"></div>
         </div>
 
 
@@ -1600,13 +1595,13 @@
         </div>
         <div id="waiting-room-page" class="page-container hidden">
           <div class="filters">
-            <div class="filter-group" style="margin-left: auto;">
-              <input type="text" class="search-input" placeholder="Search waiting room..."
-                onkeyup="filterTable('waitingRoomTable', this.value)">
-            </div>
             <div class="filter-group">
               <button class="btn btn-secondary btn-sm"
                 onclick="exportTableToCSV('waitingRoomTable', 'waiting_room')">Export CSV</button>
+            </div>
+            <div class="filter-group" style="margin-left: auto;">
+              <input type="text" class="search-input" placeholder="Search waiting room..."
+                onkeyup="filterTable('waitingRoomTable', this.value)">
             </div>
           </div>
           <div class="card">
@@ -1628,6 +1623,7 @@
               </div>
             </div>
           </div>
+          <div class="pagination-controls" id="waitingRoomPagination"></div>
         </div>
 
         <!-- Audit Logs Page -->
@@ -1916,6 +1912,10 @@
                     Edit
                   </button>
                 </div>
+              </div>
+              <div class="total-row">
+                <span class="total-label">Tax (15%):</span>
+                <span class="total-value" id="invoiceTax">R 0.00</span>
               </div>
               <div class="total-row grand-total">
                 <span class="total-label">Total Amount:</span>
@@ -2381,6 +2381,7 @@
   </div>
   </script>
   <script src="app.js"></script>
+  <script src="unit-tests.js"></script>
   <script src="extensions.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 
@@ -2390,9 +2391,11 @@
   <!-- Original Application Scripts -->
   <script src="console-error-fixes.js"></script>
 
-  <script src="extensions.js"></script>
+
   <!-- NEW: Fixes for Run Billing and Form Validation -->
   <script src="app-fixes.js"></script>
+  <script src="page-layout-enhancements.js"></script>
+
   <script src="document-utils.js"></script>
   <script src="tab-navigation-fix.js"></script>
   <script src="reports-filter.js"></script>
@@ -2417,12 +2420,25 @@
   <script src="comprehensive-fixes.js"></script>
 
   <script src="invoice-fixes.js"></script>
+  <script src="usage-pagination-override.js"></script>
 </body>
 
 </html>
 <!-- Audit Logs Page -->
 <!-- Status Change Modal -->
 <div id="changeStatusModal" class="modal">
+  <!-- General Confirmation Modal -->
+  <div id="confirmModal" class="modal">
+    <div class="modal-content" style="max-width: 400px; text-align: center;">
+      <h2 id="confirmModalTitle" style="color: var(--danger);">Confirm Action</h2>
+      <p id="confirmModalMessage" style="margin: 20px 0; color: var(--text-light);">Are you sure?</p>
+      <div class="modal-actions" style="justify-content: center; gap: 10px;">
+        <button class="btn btn-secondary"
+          onclick="document.getElementById('confirmModal').classList.remove('show');">Cancel</button>
+        <button class="btn btn-danger" id="confirmModalBtn">Confirm</button>
+      </div>
+    </div>
+  </div>
   <div class="modal-content">
     <span class="close-modal" onclick="closeStatusChangeModal()">&times;</span>
     <h2>Change Status</h2>

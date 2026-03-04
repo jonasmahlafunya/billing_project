@@ -1,0 +1,23 @@
+/* ===================================
+   HIDE DUPLICATE EXPORT BUTTONS
+   Remove export buttons from filter sections
+   =================================== */
+
+/* Hide all export CSV buttons in filter sections */
+.filter-section button[onclick*="exportTableToCSV"],
+.filter-section button[onclick*="Export"],
+.filters button[onclick*="exportTableToCSV"],
+.filters button[onclick*="Export"] {
+    display: none !important;
+}
+
+/* Hide export buttons in Reports page filter area */
+#reports-page .filter-section button:contains("Export"),
+#reports-page button[onclick*="CSV"] {
+    display: none !important;
+}
+
+/* Ensure only bottom-right export buttons are visible */
+.page-footer .export-btn {
+    display: inline-flex !important;
+}

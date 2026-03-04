@@ -203,9 +203,17 @@ function initRunBilling() {
 
             tbody.innerHTML = breakdown;
 
-            document.getElementById('invoiceSubtotal').textContent = `R${inv.amount.toFixed(2)}`;
-            document.getElementById('invoiceOutstanding').textContent = `R${inv.amount.toFixed(2)}`;
-            document.getElementById('invoicePaid').textContent = 'R0.00';
+            const subtotal = inv.amount;
+            const discount = 0;
+            const tax = (subtotal - discount) * 0.15;
+            const total = (subtotal - discount) + tax;
+
+            if (document.getElementById('invoiceSubtotal')) document.getElementById('invoiceSubtotal').textContent = `R${subtotal.toFixed(2)}`;
+            if (document.getElementById('invoiceDiscount')) document.getElementById('invoiceDiscount').textContent = `R${discount.toFixed(2)}`;
+            if (document.getElementById('invoiceTax')) document.getElementById('invoiceTax').textContent = `R${tax.toFixed(2)}`;
+            if (document.getElementById('invoiceTotal')) document.getElementById('invoiceTotal').textContent = `R${total.toFixed(2)}`;
+            if (document.getElementById('invoiceOutstanding')) document.getElementById('invoiceOutstanding').textContent = `R${total.toFixed(2)}`;
+            if (document.getElementById('invoicePaid')) document.getElementById('invoicePaid').textContent = 'R0.00';
 
             modal.classList.add('show');
 
@@ -235,8 +243,17 @@ function initRunBilling() {
 
             tbody.innerHTML = transList;
 
-            document.getElementById('invoiceSubtotal').textContent = `R${inv.amount.toFixed(2)}`;
-            document.getElementById('invoiceOutstanding').textContent = `R${inv.amount.toFixed(2)}`;
+            const subtotal = inv.amount;
+            const discount = 0;
+            const tax = (subtotal - discount) * 0.15;
+            const total = (subtotal - discount) + tax;
+
+            if (document.getElementById('invoiceSubtotal')) document.getElementById('invoiceSubtotal').textContent = `R${subtotal.toFixed(2)}`;
+            if (document.getElementById('invoiceDiscount')) document.getElementById('invoiceDiscount').textContent = `R${discount.toFixed(2)}`;
+            if (document.getElementById('invoiceTax')) document.getElementById('invoiceTax').textContent = `R${tax.toFixed(2)}`;
+            if (document.getElementById('invoiceTotal')) document.getElementById('invoiceTotal').textContent = `R${total.toFixed(2)}`;
+            if (document.getElementById('invoiceOutstanding')) document.getElementById('invoiceOutstanding').textContent = `R${total.toFixed(2)}`;
+            if (document.getElementById('invoicePaid')) document.getElementById('invoicePaid').textContent = 'R0.00';
 
             modal.classList.add('show');
 
@@ -269,59 +286,74 @@ function initRunBilling() {
         confirmBtn.onclick = () => {
             if (generatedInvoices.length === 0) return;
 
-            if (!confirm(`Are you sure you want to generate and send ${generatedInvoices.length} invoice(s)?`)) {
-                return;
-            }
+            const executeGeneration = () => {
+                ActionFeedback.showLoading(confirmBtn, 'Generating...');
+                const progress = ActionFeedback.showProgress('Generating invoices...');
 
-            ActionFeedback.showLoading(confirmBtn, 'Generating...');
-            const progress = ActionFeedback.showProgress('Generating invoices...');
+                setTimeout(() => {
+                    try {
+                        generatedInvoices.forEach((inv, index) => {
+                            const billingMonth = new Date(dateFromInput.value).toLocaleString('default', { month: 'long', year: 'numeric' });
+                            const subtotal = inv.amount;
+                            const discount = 0;
+                            const tax = (subtotal - discount) * 0.15;
+                            const total = (subtotal - discount) + tax;
 
-            setTimeout(() => {
-                try {
-                    generatedInvoices.forEach((inv, index) => {
-                        const billingMonth = new Date(dateFromInput.value).toLocaleString('default', { month: 'long', year: 'numeric' });
-                        const newInvoice = {
-                            id: mockData.invoices.length + 1,
-                            company: inv.company,
-                            transactions: inv.transactions.length,
-                            unitPrice: inv.amount / inv.transactions.length,
-                            totalPrice: inv.amount,
-                            paidAmount: 0,
-                            discount: 0,
-                            outstanding: inv.amount,
-                            status: 'Unpaid',
-                            dueDate: new Date(new Date().setDate(new Date().getDate() + 30)).toISOString().split('T')[0],
-                            billingMonth: billingMonth,
-                            items: inv.transactions
-                        };
+                            const newInvoice = {
+                                id: mockData.invoices.length + 1,
+                                company: inv.company,
+                                transactions: inv.transactions.length,
+                                unitPrice: inv.amount / inv.transactions.length, // historical component
+                                totalPrice: total, // historical component
+                                subtotal: subtotal,
+                                discount: discount,
+                                tax: tax,
+                                total: total,
+                                paidAmount: 0,
+                                paid: 0,
+                                outstanding: total,
+                                status: 'Unpaid',
+                                dueDate: new Date(new Date().setDate(new Date().getDate() + 30)).toISOString().split('T')[0],
+                                billingMonth: billingMonth,
+                                items: inv.transactions
+                            };
 
-                        mockData.invoices.push(newInvoice);
-                    });
+                            mockData.invoices.push(newInvoice);
+                        });
 
-                    saveToLocalStorage();
+                        saveToLocalStorage();
 
-                    ActionFeedback.hideProgress();
-                    ActionFeedback.hideLoading(confirmBtn);
-                    ActionFeedback.showSuccess(`Successfully generated ${generatedInvoices.length} invoice(s)!`);
+                        ActionFeedback.hideProgress();
+                        ActionFeedback.hideLoading(confirmBtn);
+                        ActionFeedback.showSuccess(`Successfully generated ${generatedInvoices.length} invoice(s)!`);
 
-                    // Reset
-                    generatedInvoices = [];
-                    renderBillingPreview();
-                    confirmBtn.disabled = true;
-                    dateFromInput.value = '';
-                    dateToInput.value = '';
+                        // Reset
+                        generatedInvoices = [];
+                        renderBillingPreview();
+                        confirmBtn.disabled = true;
+                        dateFromInput.value = '';
+                        dateToInput.value = '';
 
-                    // Refresh other views
-                    if (typeof renderInvoices === 'function') renderInvoices();
-                    if (typeof renderDashboard === 'function') renderDashboard();
+                        // Refresh other views
+                        if (typeof renderInvoices === 'function') renderInvoices();
+                        if (typeof renderDashboard === 'function') renderDashboard();
 
-                } catch (error) {
-                    console.error('Invoice generation error:', error);
-                    ActionFeedback.hideProgress();
-                    ActionFeedback.hideLoading(confirmBtn);
-                    ActionFeedback.showError('Failed to generate invoices: ' + error.message);
+                    } catch (error) {
+                        console.error('Invoice generation error:', error);
+                        ActionFeedback.hideProgress();
+                        ActionFeedback.hideLoading(confirmBtn);
+                        ActionFeedback.showError('Failed to generate invoices: ' + error.message);
+                    }
+                }, 1000);
+            };
+
+            if (window.showConfirmModal) {
+                window.showConfirmModal('Generate Invoices', `Are you sure you want to generate and send ${generatedInvoices.length} invoice(s)?`, executeGeneration);
+            } else {
+                if (confirm(`Are you sure you want to generate and send ${generatedInvoices.length} invoice(s)?`)) {
+                    executeGeneration();
                 }
-            }, 1000);
+            }
         };
     }
 }

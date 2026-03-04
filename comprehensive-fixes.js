@@ -122,12 +122,17 @@ function loadInvoiceLineItems(invoice) {
 function updateInvoiceTotals(invoice) {
     const subtotal = invoice.subtotal || invoice.total || 0;
     const discount = invoice.discount || 0;
-    const total = invoice.total || subtotal - discount;
-    const paid = invoice.paid || 0;
-    const outstanding = invoice.outstanding || (total - paid);
+    const discountedAmount = subtotal - discount;
+    const tax = invoice.tax !== undefined ? parseFloat(invoice.tax) : (discountedAmount * 0.15);
+    const total = invoice.total !== undefined ? parseFloat(invoice.total) : (discountedAmount + tax);
+    const paid = invoice.paid || invoice.paidAmount || 0;
+    const outstanding = invoice.outstanding !== undefined ? parseFloat(invoice.outstanding) : (total - paid);
 
     document.getElementById('invoiceSubtotal').textContent = 'R ' + formatCurrency(subtotal);
     document.getElementById('invoiceDiscount').textContent = 'R ' + formatCurrency(discount);
+    if (document.getElementById('invoiceTax')) {
+        document.getElementById('invoiceTax').textContent = 'R ' + formatCurrency(tax);
+    }
     document.getElementById('invoiceTotal').textContent = 'R ' + formatCurrency(total);
     document.getElementById('invoicePaid').textContent = 'R ' + formatCurrency(paid);
     document.getElementById('invoiceOutstanding').textContent = 'R ' + formatCurrency(outstanding);
@@ -425,6 +430,10 @@ function generateConsolidatedInvoice(company, dateFrom, dateTo) {
     // Generate invoice ID
     const invoiceNumber = 'INV-' + new Date().getFullYear() + '-' + (mockData.invoices.length + 1).toString().padStart(3, '0');
 
+    const discount = 0;
+    const tax = (subtotal - discount) * 0.15;
+    const total = (subtotal - discount) + tax;
+
     // Create consolidated invoice
     const invoice = {
         id: 'inv_' + Date.now(),
@@ -435,12 +444,17 @@ function generateConsolidatedInvoice(company, dateFrom, dateTo) {
         paymentTerms: 'Net 15',
         lineItems: lineItems,
         subtotal: subtotal,
-        discount: 0,
-        total: subtotal,
+        discount: discount,
+        tax: tax,
+        total: total,
+        totalPrice: total,
+        unitPrice: total,
         paid: 0,
-        outstanding: subtotal,
+        paidAmount: 0,
+        outstanding: total,
         status: 'Unpaid',
-        month: new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' })
+        month: new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' }),
+        billingMonth: new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' })
     };
 
     // Mark transactions and manual billing as invoiced

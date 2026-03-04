@@ -29,6 +29,18 @@ class DataManager {
 
     saveData(data) {
         localStorage.setItem(this.storageKey, JSON.stringify(data));
+
+        // CRITICAL SYNC: Ensure the global mockData object is also updated
+        if (typeof mockData !== 'undefined') {
+            Object.assign(mockData, data);
+
+            // Trigger MySQL Save
+            if (typeof saveToDatabase === 'function') {
+                saveToDatabase();
+            } else if (typeof saveToLocalStorage === 'function') {
+                saveToLocalStorage();
+            }
+        }
         return true;
     }
 
@@ -873,22 +885,74 @@ function editCompany(id) {
     }
 }
 
-// Delete company
-function deleteCompany(id) {
-    if (confirm('Are you sure you want to delete this company? This action cannot be undone.')) {
-        const company = dataManager.getCompanyById(id);
-        const deleted = dataManager.deleteCompany(id);
-        if (deleted) {
-            Toast.success('Company deleted successfully');
-            loadCompanies();
-            notificationManager.add({
-                title: 'Company Deleted',
-                message: `${company?.name || 'Company'} has been deleted`
-            });
-        } else {
-            Toast.error('Failed to delete company');
-        }
+// Generic Confirm Modal
+window.showConfirmModal = function (title, message, onConfirm) {
+    const modal = document.getElementById('confirmModal');
+    if (!modal) {
+        if (confirm(message)) onConfirm();
+        return;
     }
+
+    document.getElementById('confirmModalTitle').textContent = title;
+    document.getElementById('confirmModalMessage').textContent = message;
+
+    const confirmBtn = document.getElementById('confirmModalBtn');
+    const newConfirmBtn = confirmBtn.cloneNode(true);
+    confirmBtn.parentNode.replaceChild(newConfirmBtn, confirmBtn);
+
+    newConfirmBtn.onclick = () => {
+        onConfirm();
+        modal.classList.remove('show');
+    };
+
+    modal.classList.add('show');
+};
+
+// Delete company
+window.deleteCompany = function (id) {
+    const company = dataManager.getCompanyById(id);
+    if (!company) return;
+
+    // Safegaurd: Check if invoices exist
+    const hasInvoices = typeof mockData !== 'undefined' && mockData.invoices && mockData.invoices.some(inv => inv.company === company.name);
+
+    if (hasInvoices) {
+        window.showConfirmModal(
+            'Cannot Delete Client',
+            `Company "${company.name}" has active invoices and cannot be hard-deleted. Do you want to soft-delete (deactivate) instead?`,
+            () => {
+                company.active = false;
+                company.status = 'inactive';
+                dataManager.updateCompany(id, company);
+                if (typeof saveToLocalStorage === 'function') saveToLocalStorage();
+                Toast.info('Company marked as inactive');
+                loadCompanies();
+                if (typeof renderCompanies === 'function') renderCompanies();
+                if (typeof renderDashboard === 'function') renderDashboard();
+            }
+        );
+        return;
+    }
+
+    window.showConfirmModal(
+        'Delete Company',
+        'Are you sure you want to delete this company? This action cannot be undone.',
+        () => {
+            const deleted = dataManager.deleteCompany(id);
+            if (deleted) {
+                Toast.success('Company deleted successfully');
+                loadCompanies();
+                if (typeof renderCompanies === 'function') renderCompanies();
+                if (typeof renderDashboard === 'function') renderDashboard();
+                notificationManager.add({
+                    title: 'Company Deleted',
+                    message: `${company?.name || 'Company'} has been deleted`
+                });
+            } else {
+                Toast.error('Failed to delete company');
+            }
+        }
+    );
 }
 
 // View company

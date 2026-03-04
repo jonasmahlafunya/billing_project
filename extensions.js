@@ -527,7 +527,18 @@ function renderInvoices() {
     const tbody = document.getElementById('invoicesTableBody');
     const filteredInvoices = getFilteredInvoices();
 
-    if (currentTab === 'statements') {
+    // Safely determine current tab
+    let activeTabName = 'unpaid';
+    if (typeof currentTab !== 'undefined') {
+        activeTabName = currentTab;
+    } else {
+        const activeTab = document.querySelector('#reports-page .tab.active');
+        if (activeTab) {
+            activeTabName = activeTab.getAttribute('data-tab');
+        }
+    }
+
+    if (activeTabName === 'statements') {
         const companies = mockData.companies;
 
         tbody.innerHTML = companies.map(c => `

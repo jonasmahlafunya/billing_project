@@ -23,28 +23,45 @@ let mockData = {
   invoices: [],
   companyUsers: []
 };
+// Expose mockData globally
+window.mockData = mockData;
 
 async function loadData() {
-  console.log('Loading app data...');
-
-  // 1. Try LocalStorage
-  if (loadFromLocalStorage()) {
-    console.log('Loaded from LocalStorage');
-    return;
-  }
-
-  // 2. Fetch from data.json
+  console.log('Loading app data from database...');
   try {
-    const response = await fetch('data.json');
-    if (!response.ok) throw new Error('Failed to load data.json');
+    const response = await fetch('api.php?action=loadAll');
+    if (!response.ok) throw new Error('API fetch failed');
     const data = await response.json();
-    Object.assign(mockData, data);
-    standardizeData(); // Enforce Product Standards
-    saveToLocalStorage(); // Seed
-    console.log('Seeded from data.json');
+
+    // Check if database is empty (no companies) indicating an initial state
+    if (!data.companies || data.companies.length === 0) {
+      console.log('Database empty, attempting to seed from data.json or LocalStorage...');
+      if (!loadFromLocalStorage()) {
+        const fallbackRes = await fetch('data.json');
+        if (fallbackRes.ok) {
+          const fallbackData = await fallbackRes.json();
+          Object.assign(mockData, fallbackData);
+        }
+      }
+      standardizeData();
+      saveToDatabase(); // Seed the database with the fallback data
+    } else {
+      // Use database data
+      Object.assign(mockData, data);
+      standardizeData();
+      console.log('Successfully loaded from MySQL database via API');
+    }
   } catch (e) {
-    console.error('Failed to load data', e);
-    showNotification('Error loading data.json', 'error');
+    console.warn('Failed to load from API. Attempting fallback.', e);
+    if (!loadFromLocalStorage()) {
+      try {
+        const res = await fetch('data.json');
+        if (res.ok) Object.assign(mockData, await res.json());
+      } catch (err) {
+        console.error('Final fallback failed', err);
+      }
+    }
+    standardizeData();
   }
 }
 
@@ -60,18 +77,38 @@ let sortDirection = 'asc';
 let currentUser = null;
 
 // ===================================
-// LOCALSTORAGE PERSISTENCE
+// DATABASE & PERSISTENCE
 // ===================================
+
+async function saveToDatabase() {
+  try {
+    const response = await fetch('api.php?action=saveAll', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(mockData)
+    });
+    const result = await response.json();
+    if (result.success) {
+      console.log('Data seamlessly synced to InfinityFree MySQL database');
+    } else {
+      console.error('Database sync error:', result.error);
+    }
+  } catch (e) {
+    console.error('API save failed:', e);
+  }
+}
 
 function saveToLocalStorage() {
   try {
-    // Save entire mockData to localStorage
+    // Preserve local backup
     localStorage.setItem('billingData', JSON.stringify(mockData));
-    console.log('Data saved to localStorage');
+    console.log('Data saved to localStorage backup');
   } catch (error) {
-    console.error('Error saving to localStorage:', error);
-    showNotification('Error saving data', 'error');
+    console.error('Error saving to localStorage backup:', error);
   }
+
+  // Asynchronously trigger database sync
+  saveToDatabase();
 }
 
 function loadFromLocalStorage() {
@@ -79,7 +116,6 @@ function loadFromLocalStorage() {
     const savedData = localStorage.getItem('billingData');
     if (savedData) {
       const parsedData = JSON.parse(savedData);
-      // Merge saved data with mockData, preserving structure
       Object.assign(mockData, parsedData);
       console.log('Data loaded from localStorage');
       return true;
@@ -98,18 +134,45 @@ function checkAuth() {
   const userSession = localStorage.getItem('billingUser') || sessionStorage.getItem('billingUser');
 
   if (!userSession) {
-    window.location.href = 'dashboard.html';
+    window.location.href = 'login.html';
     return false;
   }
 
   try {
     currentUser = JSON.parse(userSession);
     updateUserProfile();
+    setupSessionTimeout();
     return true;
   } catch (e) {
-    window.location.href = 'dashboard.html';
+    window.location.href = 'login.html';
     return false;
   }
+}
+
+// ===================================
+// SESSION TIMEOUT
+// ===================================
+let sessionTimeoutId;
+const TIMEOUT_MS = 30 * 60 * 1000; // 30 minutes
+
+function resetSessionTimeout() {
+  clearTimeout(sessionTimeoutId);
+  sessionTimeoutId = setTimeout(handleSessionTimeout, TIMEOUT_MS);
+}
+
+function handleSessionTimeout() {
+  localStorage.removeItem('billingUser');
+  sessionStorage.removeItem('billingUser');
+  localStorage.removeItem('billingUserToken');
+  window.location.href = 'login.html?timeout=true';
+}
+
+function setupSessionTimeout() {
+  document.addEventListener('mousemove', resetSessionTimeout);
+  document.addEventListener('mousedown', resetSessionTimeout);
+  document.addEventListener('keypress', resetSessionTimeout);
+  document.addEventListener('touchmove', resetSessionTimeout);
+  resetSessionTimeout();
 }
 
 function updateUserProfile() {
@@ -124,6 +187,7 @@ function updateUserProfile() {
 function logout() {
   localStorage.removeItem('billingUser');
   sessionStorage.removeItem('billingUser');
+  localStorage.removeItem('billingUserToken');
   showNotification('Logged out successfully', 'success');
   setTimeout(() => {
     window.location.href = 'login.html';
@@ -881,8 +945,8 @@ function initCompanyModal() {
   btn.onclick = () => {
     modal.classList.add('show');
     form.reset();
-    parentGroup.classList.add('hidden');
-    parentIdGroup.classList.add('hidden');
+    if (parentGroup) parentGroup.classList.add('hidden');
+    if (parentIdGroup) parentIdGroup.classList.add('hidden');
 
     // Auto-generate Company ID
     const nextId = mockData.companies.length + 1;
@@ -908,8 +972,8 @@ function initCompanyModal() {
 
   typeSelect.onchange = () => {
     if (typeSelect.value === 'child') {
-      parentGroup.classList.remove('hidden');
-      parentIdGroup.classList.remove('hidden');
+      if (parentGroup) parentGroup.classList.remove('hidden');
+      if (parentIdGroup) parentIdGroup.classList.remove('hidden');
       // Populate parents
       const parents = mockData.companies.filter(c => c.type === 'Parent');
       parentSelect.innerHTML = parents.map(p => `<option value="${p.id}">${p.name}</option>`).join('');
@@ -919,8 +983,8 @@ function initCompanyModal() {
         parentIdInput.value = `C${String(parents[0].id).padStart(3, '0')}`;
       }
     } else {
-      parentGroup.classList.add('hidden');
-      parentIdGroup.classList.add('hidden');
+      if (parentGroup) parentGroup.classList.add('hidden');
+      if (parentIdGroup) parentIdGroup.classList.add('hidden');
     }
   };
 
@@ -934,12 +998,14 @@ function initCompanyModal() {
     e.preventDefault();
     const formData = new FormData(form);
 
-    const newCompany = {
+    const isParent = formData.get('companyType') === 'parent';
+    const newId = `C-${String(mockData.companies.length + 1).padStart(3, '0')}`;
 
-      id: `C-${String(mockData.companies.length + 2).padStart(3, '0')}`, // Start at C-002 roughly
+    const newCompany = {
+      id: newId,
       name: formData.get('companyName'),
-      type: formData.get('companyType') === 'parent' ? 'Parent' : 'Child',
-      parentId: formData.get('companyType') === 'child' ? formData.get('parentCompany') : null,
+      type: isParent ? 'Parent' : 'Child',
+      parentId: isParent ? newId : formData.get('parentCompany'),
       contact: formData.get('contactPerson'),
       email: formData.get('email'),
       address: formData.get('address'),
@@ -1176,7 +1242,13 @@ function renderUsage() {
     </tr>
     `).join('');
 
+
+  if (typeof renderPaginationControls === 'function') {
+    renderPaginationControls('usageTable', 'usagePagination');
+  }
+
   document.getElementById('usageCount').textContent = usageData.length;
+
 }
 
 function getFilteredUsage() {
@@ -1378,6 +1450,9 @@ function renderPricedTransactions() {
     const totalPrice = txCount * p.price;
 
     pricingData.push({
+      id: p.id || `P-${String(Math.floor(Math.random() * 1000)).padStart(3, '0')}`,
+      parent: p.parent || '-',
+      companyId: p.companyId || `C-${String(Math.floor(Math.random() * 1000)).padStart(3, '0')}`,
       company: p.companyName,
       product: p.productName,
       transactions: txCount,
@@ -1399,18 +1474,27 @@ function renderPricedTransactions() {
   } else {
     tbody.innerHTML = pricingData.map(t => `
         <tr>
+          <td>${t.id || '-'}</td>
+          <td>${t.parent || '-'}</td>
+          <td>${t.companyId || '-'}</td>
           <td>${t.company}</td>
           <td>${t.product}</td>
-          <td>${t.transactions}</td>
           <td>${t.rangeFrom}</td>
           <td>${t.rangeTo}</td>
           <td>R${t.unitPrice.toFixed(2)}</td>
-          <td>R${t.totalPrice.toFixed(2)}</td>
+          <td>${t.validFor || 'Active'}</td>
+          <td><span class="status-indicator status-active">Active</span></td>
         </tr>
         `).join('');
   }
 
+
+  if (typeof renderPaginationControls === 'function') {
+    renderPaginationControls('pricingTable', 'pricingPagination');
+  }
+
   document.getElementById('pricedTransactionsCount').textContent = pricingData.length;
+
 }
 
 function initPricedTransactionsFilters() {
@@ -1566,8 +1650,13 @@ function downloadCSV(csv, filename) {
 
 function renderManualBilling() {
   const tbody = document.getElementById('manualBillingTableBody');
+  let dataToRender = mockData.manualBilling;
 
-  tbody.innerHTML = mockData.manualBilling.map(item => `
+  if (typeof getPaginatedData === 'function') {
+    dataToRender = getPaginatedData(dataToRender, 'manualBillingTable');
+  }
+
+  tbody.innerHTML = dataToRender.map(item => `
     <tr>
       <td>${item.id}</td>
       <td>${item.company}</td>
@@ -1580,7 +1669,14 @@ function renderManualBilling() {
       <td>${item.authorizedDate || '-'}</td>
     </tr>
     `).join('');
+
+  if (typeof renderPaginationControls === 'function') {
+    renderPaginationControls('manualBillingTable', 'manualBillingPagination');
+  }
 }
+
+// Expose renderManualBilling globally
+window.renderManualBilling = renderManualBilling;
 
 function initManualBilling() {
   const modal = document.getElementById('manualBillingModal');
@@ -1746,8 +1842,13 @@ function initBatchLogger() {
 
 function renderBatchLogger() {
   const tbody = document.getElementById('batchTableBody');
+  let dataToRender = mockData.batches;
 
-  tbody.innerHTML = mockData.batches.map(batch => `
+  if (typeof getPaginatedData === 'function') {
+    dataToRender = getPaginatedData(dataToRender, 'batchTable');
+  }
+
+  tbody.innerHTML = dataToRender.map(batch => `
     <tr>
       <td>${batch.id}</td>
       <td>${batch.date}</td>
@@ -1759,6 +1860,10 @@ function renderBatchLogger() {
       <td>${batch.authorizedDate || '-'}</td>
     </tr>
     `).join('');
+
+  if (typeof renderPaginationControls === 'function') {
+    renderPaginationControls('batchTable', 'batchPagination');
+  }
 }
 
 // ===================================
@@ -1923,12 +2028,23 @@ window.handleLeadAction = function (select, leadId) {
       modal.classList.add('show');
     }
   } else if (action === 'delete') {
-    if (confirm('Are you sure you want to delete this lead?')) {
-      const idx = mockData.leads.findIndex(l => l.id === leadId);
-      if (idx !== -1) {
-        mockData.leads.splice(idx, 1);
-        renderLeads();
-        showNotification('Lead deleted', 'success');
+    if (window.showConfirmModal) {
+      window.showConfirmModal('Delete Lead', 'Are you sure you want to delete this lead?', () => {
+        const idx = mockData.leads.findIndex(l => l.id === leadId);
+        if (idx !== -1) {
+          mockData.leads.splice(idx, 1);
+          renderLeads();
+          showNotification('Lead deleted', 'success');
+        }
+      });
+    } else {
+      if (confirm('Are you sure you want to delete this lead?')) {
+        const idx = mockData.leads.findIndex(l => l.id === leadId);
+        if (idx !== -1) {
+          mockData.leads.splice(idx, 1);
+          renderLeads();
+          showNotification('Lead deleted', 'success');
+        }
       }
     }
   }
@@ -3001,7 +3117,11 @@ function initAuthTabs() {
 
 function renderExceptions() {
   const tbody = document.getElementById('exceptionsTableBody');
-  const exceptions = detectExceptions();
+  let exceptions = detectExceptions();
+
+  if (typeof getPaginatedData === 'function') {
+    exceptions = getPaginatedData(exceptions, 'exceptionsTable');
+  }
 
   if (exceptions.length === 0) {
     tbody.innerHTML = '<tr><td colspan="7" class="text-center">No exceptions found</td></tr>';
@@ -3019,6 +3139,10 @@ function renderExceptions() {
       </td>
     </tr>
     `).join('');
+  }
+
+  if (typeof renderPaginationControls === 'function') {
+    renderPaginationControls('exceptionsTable', 'exceptionsPagination');
   }
 }
 
@@ -3061,7 +3185,11 @@ function resolveException(company, product) {
 
 function renderWaitingRoom() {
   const tbody = document.getElementById('waitingRoomTableBody');
-  const unauthorizedUsers = mockData.users.filter(u => !u.authorized);
+  let unauthorizedUsers = mockData.users.filter(u => !u.authorized);
+
+  if (typeof getPaginatedData === 'function') {
+    unauthorizedUsers = getPaginatedData(unauthorizedUsers, 'waitingRoomTable');
+  }
 
   if (unauthorizedUsers.length === 0) {
     tbody.innerHTML = '<tr><td colspan="5" class="text-center">No users in waiting room</td></tr>';
@@ -3080,6 +3208,10 @@ function renderWaitingRoom() {
     `).join('');
   }
   updateWaitingRoomBadge();
+
+  if (typeof renderPaginationControls === 'function') {
+    renderPaginationControls('waitingRoomTable', 'waitingRoomPagination');
+  }
 }
 
 function approveUser(email) {
@@ -4185,7 +4317,12 @@ function renderCampaigns(campaigns = mockData.campaigns) {
     return;
   }
 
-  tbody.innerHTML = campaigns.map(campaign => `
+  let dataToRender = campaigns;
+  if (typeof getPaginatedData === 'function') {
+    dataToRender = getPaginatedData(dataToRender, 'marketingTable');
+  }
+
+  tbody.innerHTML = dataToRender.map(campaign => `
     <tr>
       <td>${campaign.name}</td>
       <td>${campaign.type}</td>
@@ -4204,6 +4341,10 @@ function renderCampaigns(campaigns = mockData.campaigns) {
       </td>
     </tr>
   `).join('');
+
+  if (typeof renderPaginationControls === 'function') {
+    renderPaginationControls('marketingTable', 'marketingPagination');
+  }
 }
 
 window.handleCampaignAction = function (select, campaignId) {
@@ -4232,12 +4373,23 @@ window.handleCampaignAction = function (select, campaignId) {
       alert(`Campaign Report: ${campaign.name}\n\nStatus: ${campaign.status}\nSent To: ${campaign.sentTo}\nOpen Rate: ${campaign.openRate}\nClick Rate: ${campaign.clickRate}\nCreated: ${campaign.createdDate}`);
     }
   } else if (action === 'delete') {
-    if (confirm('Delete this campaign?')) {
-      const idx = mockData.campaigns.findIndex(c => c.id === campaignId);
-      if (idx !== -1) {
-        mockData.campaigns.splice(idx, 1);
-        renderCampaigns();
-        showNotification('Campaign deleted', 'success');
+    if (window.showConfirmModal) {
+      window.showConfirmModal('Delete Campaign', 'Are you sure you want to delete this campaign?', () => {
+        const idx = mockData.campaigns.findIndex(c => c.id === campaignId);
+        if (idx !== -1) {
+          mockData.campaigns.splice(idx, 1);
+          renderCampaigns();
+          showNotification('Campaign deleted', 'success');
+        }
+      });
+    } else {
+      if (confirm('Delete this campaign?')) {
+        const idx = mockData.campaigns.findIndex(c => c.id === campaignId);
+        if (idx !== -1) {
+          mockData.campaigns.splice(idx, 1);
+          renderCampaigns();
+          showNotification('Campaign deleted', 'success');
+        }
       }
     }
   }

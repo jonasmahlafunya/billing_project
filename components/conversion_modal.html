@@ -1,0 +1,17 @@
+<!-- Conversion Confirmation Modal -->
+<div id="conversionModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Convert Lead to Company</h3>
+            <button class="modal-close" onclick="closeConversionModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <p>Are you sure you want to convert this lead to a new company?</p>
+            <p class="text-muted">This will create a new Company record and set the Lead status to Converted.</p>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-secondary" onclick="closeConversionModal()">Cancel</button>
+            <button id="confirmConversionBtn" class="btn btn-success">Convert</button>
+        </div>
+    </div>
+</div>

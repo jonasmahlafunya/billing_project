@@ -1,0 +1,299 @@
+/* ===================================
+   PAGE LAYOUT STANDARDIZATION
+   Consistent filters, buttons, and positioning
+   =================================== */
+
+/* ===================================
+   1. STANDARDIZED FILTER BAR
+   =================================== */
+
+.filters {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 20px;
+    background: #f8fafc;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.filter-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.filter-group label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #64748b;
+    white-space: nowrap;
+}
+
+.filter-group select,
+.filter-group input[type="date"],
+.filter-group input[type="text"],
+.filter-group input[type="number"] {
+    padding: 8px 12px;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    font-size: 13px;
+    min-width: 150px;
+    background: white;
+}
+
+.filter-group select:focus,
+.filter-group input:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* Search input - standardized size */
+.search-input {
+    padding: 8px 12px !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 6px !important;
+    font-size: 13px !important;
+    width: 250px !important;
+    background: white !important;
+}
+
+.search-input:focus {
+    outline: none !important;
+    border-color: #3b82f6 !important;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1) !important;
+}
+
+/* Filter buttons */
+.filter-btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.filter-btn.primary {
+    background: #3b82f6;
+    color: white;
+}
+
+.filter-btn.primary:hover {
+    background: #2563eb;
+}
+
+.filter-btn.secondary {
+    background: #e2e8f0;
+    color: #475569;
+}
+
+.filter-btn.secondary:hover {
+    background: #cbd5e1;
+}
+
+/* Push items to the right */
+.filters .ml-auto {
+    margin-left: auto;
+}
+
+/* ===================================
+   2. EXPORT CSV BUTTON POSITIONING
+   =================================== */
+
+/* Container for export button at bottom right */
+.page-footer {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 16px 0;
+    margin-top: 20px;
+}
+
+.export-btn {
+    padding: 8px 16px;
+    background: #10b981;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.export-btn:hover {
+    background: #059669;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+.export-btn::before {
+    content: '↓';
+    font-size: 16px;
+}
+
+/* Move existing export buttons to bottom */
+.card-body .pagination-info button,
+.card-body>button[onclick*="exportTableToCSV"],
+.filters button[onclick*="exportTableToCSV"] {
+    display: none !important;
+}
+
+/* ===================================
+   3. STANDARDIZED DATE RANGE FILTERS
+   =================================== */
+
+.date-range-filter {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.date-range-filter label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #64748b;
+}
+
+.date-range-filter input[type="date"] {
+    padding: 8px 12px;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    font-size: 13px;
+    background: white;
+}
+
+/* ===================================
+   4. CONSISTENT BUTTON SIZES
+   =================================== */
+
+.btn,
+.btn-primary,
+.btn-secondary,
+.btn-success,
+.btn-danger {
+    padding: 8px 16px !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    border-radius: 6px !important;
+    border: none !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+    height: 36px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.btn-sm {
+    padding: 6px 12px !important;
+    font-size: 12px !important;
+    height: 32px !important;
+}
+
+/* ===================================
+   5. FILTER LAYOUT TEMPLATES
+   =================================== */
+
+/* Reports-style filter layout */
+.reports-style-filters {
+    display: grid;
+    grid-template-columns: auto auto auto 1fr auto;
+    gap: 12px;
+    align-items: center;
+    padding: 16px 20px;
+    background: #f8fafc;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.reports-style-filters .filter-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.reports-style-filters .search-group {
+    justify-self: end;
+}
+
+.reports-style-filters .action-group {
+    display: flex;
+    gap: 8px;
+}
+
+/* ===================================
+   6. RESPONSIVE ADJUSTMENTS
+   =================================== */
+
+@media (max-width: 1200px) {
+    .reports-style-filters {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .search-input {
+        width: 100% !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .filters {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .filter-group {
+        width: 100%;
+    }
+
+    .filter-group select,
+    .filter-group input {
+        width: 100%;
+    }
+}
+
+/* ===================================
+   7. HIDE OLD EXPORT BUTTONS
+   =================================== */
+
+/* Hide export buttons in pagination-info */
+.pagination-info button {
+    display: none !important;
+}
+
+/* Hide export buttons in filters (we'll add them to footer) */
+.filters .btn-secondary[onclick*="export"],
+.filters .btn-secondary[onclick*="Export"] {
+    display: none !important;
+}
+
+/* ===================================
+   8. TABLE FOOTER STYLING
+   =================================== */
+
+.table-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 0;
+    margin-top: 12px;
+}
+
+.table-footer .pagination-controls {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.table-footer .export-actions {
+    display: flex;
+    gap: 8px;
+}

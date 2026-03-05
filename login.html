@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Billing Management System</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="login-container-split">
+        <!-- Left Side: Login Form -->
+        <div class="login-left">
+            <div class="login-brand">
+                <div class="logo-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                        <path d="M22 6l-10 7L2 6" />
+                    </svg>
+                </div>
+                <span>Billing Management</span>
+            </div>
+
+            <div class="login-form-wrapper" id="step1">
+                <h1 class="login-title">Welcome Back</h1>
+                <p class="login-subtitle">Please enter your details to sign in.</p>
+
+                <div id="loginAlert" class="alert hidden"></div>
+
+                <form id="loginForm" onsubmit="handleLogin(event)">
+                    <div class="form-group">
+                        <label class="form-label">Email Address</label>
+                        <input type="email" class="form-input" id="email" placeholder="Enter your email" required
+                            value="thabo@billing.com">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Password</label>
+                        <div class="password-input-group">
+                            <input type="password" class="form-input" id="password" placeholder="••••••••" required
+                                value="admin123">
+                            <span class="password-toggle" onclick="togglePassword()">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20"
+                                    height="20">
+                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                                    <circle cx="12" cy="12" r="3" />
+                                </svg>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="form-options">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="rememberMe"> Remember me
+                        </label>
+                        <a href="#" class="forgot-password">Forgot Password?</a>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-block btn-lg" id="loginBtn">Sign In</button>
+
+                    <div class="login-footer">
+                        Don't have an account? <a href="register.html">Sign up</a>
+                    </div>
+                </form>
+
+                <div class="demo-credentials" style="margin-top: 32px;">
+                    <h4>Demo Credentials</h4>
+                    <p><strong>Admin:</strong> thabo@billing.com / admin123</p>
+                    <p><strong>Manager:</strong> sarah@billing.com / admin123</p>
+                    <p><strong>Sales:</strong> john@billing.com / admin123</p>
+                </div>
+            </div>
+
+            <div class="login-form-wrapper hidden" id="step2">
+                <h1 class="login-title">Verify Your Login</h1>
+                <p class="login-subtitle">We have sent a 6-digit OTP to your email address.</p>
+
+                <div id="otpAlert" class="alert hidden"></div>
+
+                <form id="otpForm" onsubmit="handleVerify(event)">
+                    <div class="form-group">
+                        <label class="form-label">OTP Code</label>
+                        <input type="text" class="form-input" id="otp" placeholder="Enter 6-digit OTP" required
+                            maxlength="6">
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block btn-lg" id="verifyBtn">Verify &
+                        Login</button>
+                    <button type="button" class="btn btn-secondary btn-block btn-lg mt-3"
+                        onclick="goBack()">Back</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Right Side: Illustration -->
+        <div class="login-right">
+            <div class="illustration-content">
+                <img src="login-illustration.png" alt="CRM Dashboard" class="login-illustration"
+                    onerror="this.style.display='none'">
+                <h2>Manage your business with ease</h2>
+                <p>Track invoices, manage clients, and grow your business with our all-in-one billing solution.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function togglePassword() {
+            const input = document.getElementById('password');
+            input.type = input.type === 'password' ? 'text' : 'password';
+        }
+
+        let pendingEmail = '';
+
+        function showAlert(id, message, isError = true) {
+            const alertEl = document.getElementById(id);
+            alertEl.textContent = message;
+            alertEl.className = `alert alert-${isError ? 'error' : 'success'} show`;
+            alertEl.classList.remove('hidden');
+        }
+
+        function hideAlert(id) {
+            document.getElementById(id).classList.add('hidden');
+        }
+
+        async function handleLogin(event) {
+            event.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const btn = document.getElementById('loginBtn');
+
+            hideAlert('loginAlert');
+            btn.disabled = true;
+            btn.textContent = 'Sending OTP...';
+
+            try {
+                const response = await fetch('api.php?action=login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    pendingEmail = email;
+                    document.getElementById('step1').classList.add('hidden');
+                    document.getElementById('step2').classList.remove('hidden');
+                    showAlert('otpAlert', data.message, false);
+                } else {
+                    showAlert('loginAlert', data.error || 'Failed to login');
+                }
+            } catch (err) {
+                showAlert('loginAlert', 'Network error occurred. Please try again.');
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Sign In';
+            }
+        }
+
+        async function handleVerify(event) {
+            event.preventDefault();
+            const otpCode = document.getElementById('otp').value;
+            const btn = document.getElementById('verifyBtn');
+
+            hideAlert('otpAlert');
+            btn.disabled = true;
+            btn.textContent = 'Verifying...';
+
+            try {
+                const response = await fetch('api.php?action=verify_otp', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: pendingEmail, otp: otpCode })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    const rememberMe = document.getElementById('rememberMe').checked;
+                    const sessionData = data.sessionData;
+
+                    if (rememberMe) {
+                        localStorage.setItem('billingUser', JSON.stringify(sessionData));
+                        localStorage.setItem('billingUserToken', sessionData.token);
+                        sessionStorage.removeItem('billingUser');
+                    } else {
+                        sessionStorage.setItem('billingUser', JSON.stringify(sessionData));
+                        localStorage.removeItem('billingUser');
+                        localStorage.removeItem('billingUserToken');
+                    }
+
+                    window.location.href = 'index.html';
+                } else {
+                    showAlert('otpAlert', data.error || 'Invalid OTP');
+                }
+            } catch (err) {
+                showAlert('otpAlert', 'Network error occurred. Please try again.');
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Verify & Login';
+            }
+        }
+
+        function goBack() {
+            document.getElementById('step2').classList.add('hidden');
+            document.getElementById('step1').classList.remove('hidden');
+            hideAlert('loginAlert');
+            hideAlert('otpAlert');
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,320 @@
+/* ===================================
+   AUDIT & NOTIFICATION STYLES
+   Styling for audit logs and popups
+   =================================== */
+
+/* ===================================
+   1. NOTIFICATION POPUP
+   =================================== */
+
+.notification-popup {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 10000;
+    opacity: 0;
+    transform: translateX(400px);
+    transition: all 0.3s ease;
+    pointer-events: none;
+}
+
+.notification-popup.show {
+    opacity: 1;
+    transform: translateX(0);
+    pointer-events: all;
+}
+
+.notification-content {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    min-width: 350px;
+    max-width: 500px;
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    position: relative;
+}
+
+.notification-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
+.notification-popup.success .notification-icon {
+    background: #d1fae5;
+    color: #065f46;
+}
+
+.notification-popup.error .notification-icon {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.notification-popup.warning .notification-icon {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.notification-popup.info .notification-icon {
+    background: #dbeafe;
+    color: #1e40af;
+}
+
+.notification-body {
+    flex: 1;
+}
+
+.notification-title {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0 0 8px 0;
+    color: #1e293b;
+}
+
+.notification-message {
+    font-size: 14px;
+    color: #64748b;
+    margin: 0;
+    line-height: 1.5;
+}
+
+.notification-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: #94a3b8;
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+}
+
+.notification-close:hover {
+    background: #f1f5f9;
+    color: #475569;
+}
+
+/* ===================================
+   2. STATUS CHANGE MODAL
+   =================================== */
+
+#changeStatusModal .modal-content {
+    max-width: 500px;
+}
+
+#changeStatusModal h2 {
+    margin-bottom: 20px;
+    color: #1e293b;
+}
+
+#currentStatusInfo {
+    background: #f8fafc;
+    padding: 12px 16px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-size: 14px;
+    color: #64748b;
+    border-left: 4px solid #3b82f6;
+}
+
+#changeStatusForm .form-group {
+    margin-bottom: 20px;
+}
+
+#changeStatusForm label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    font-size: 13px;
+    color: #475569;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+#changeStatusForm select,
+#changeStatusForm textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: inherit;
+    transition: all 0.2s ease;
+}
+
+#changeStatusForm select:focus,
+#changeStatusForm textarea:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+#changeStatusForm textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+#changeStatusForm button[type="submit"] {
+    width: 100%;
+    background: #3b82f6;
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+#changeStatusForm button[type="submit"]:hover {
+    background: #2563eb;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+/* ===================================
+   3. AUDIT LOGS TABLE
+   =================================== */
+
+#auditLogsTable {
+    font-size: 13px;
+}
+
+#auditLogsTable th {
+    background: #f8fafc;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-size: 11px;
+    color: #64748b;
+}
+
+#auditLogsTable td {
+    vertical-align: top;
+}
+
+.status-indicator.status-change,
+.status-indicator.status-status-change {
+    background: #dbeafe;
+    color: #1e40af;
+}
+
+.status-indicator.status-batch-approved {
+    background: #d1fae5;
+    color: #065f46;
+}
+
+.status-indicator.status-batch-rejected {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.status-indicator.status-billing-run {
+    background: #e0e7ff;
+    color: #3730a3;
+}
+
+.status-indicator.status-company-created {
+    background: #d1fae5;
+    color: #065f46;
+}
+
+.status-indicator.status-company-updated {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.status-indicator.status-company-deleted {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+/* ===================================
+   4. CHANGE STATUS BUTTON
+   =================================== */
+
+.change-status-btn {
+    background: #3b82f6;
+    color: white;
+    padding: 6px 12px;
+    border: none;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.change-status-btn:hover {
+    background: #2563eb;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+}
+
+.change-status-btn.rejected {
+    background: #10b981;
+}
+
+.change-status-btn.rejected:hover {
+    background: #059669;
+    box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+}
+
+/* ===================================
+   5. AUDIT LOG FILTERS
+   =================================== */
+
+.audit-filters {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+    padding: 16px;
+    background: #f8fafc;
+    border-radius: 8px;
+}
+
+.audit-filters select,
+.audit-filters input {
+    flex: 1;
+    padding: 8px 12px;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    font-size: 13px;
+}
+
+/* ===================================
+   6. RESPONSIVE
+   =================================== */
+
+@media (max-width: 768px) {
+    .notification-popup {
+        right: 10px;
+        left: 10px;
+    }
+
+    .notification-content {
+        min-width: auto;
+        max-width: none;
+    }
+
+    #changeStatusModal .modal-content {
+        max-width: 95%;
+    }
+}
